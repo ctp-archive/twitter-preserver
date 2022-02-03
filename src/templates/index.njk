@@ -3,7 +3,7 @@
 {% block content %}
   <h1>{{account.username}}</h1>
   <p>All the Tweets of <a href="https://twitter.com/{{account.username}}">{{account.accountDisplayName}}</a>.
-  This archive was generated from data downloaded using the Twitter Data Export 
+  This archive was generated from data downloaded using the <a href="https://help.twitter.com/en/managing-your-account/how-to-download-your-twitter-archive">Twitter Data Archive</a> 
   tool on <strong>{{manifest.archiveInfo.generationDate | dateFromISO }}</strong>.
 
 {% endblock %}

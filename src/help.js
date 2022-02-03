@@ -1,3 +1,5 @@
+import includes from './includes.js'
+
 export default () => `Usage: twitter-archive path/to/archive.zip
 twitter-archive --source=path/to/archive.zip
 
@@ -9,11 +11,23 @@ Arguments:
 --expanded
   Use if the source is actually an already-expanded Twitter zip file.
 
+--expandUrls
+  Enabled by default. Will replace all "t.co" URLs in Tweet text with
+  the actual URL the link was pointing to.
+
+--clean
+  Remove cache for URLs.
+
 --output=./public
   Write the results of the archive to this folder (default ./public)
 
+--include=tweets,dms
+  Comma-separated list of what data to include in the export.
+  Possible values are: ${includes.join(', ')}
+
 --templates=./src/templates
-  Use this directory for Nunjucks template files. Useful if you want to use your own templates to format the output.
+  Use this directory for Nunjucks template files.
+  Useful if you want to use your own templates to format the output.
 
 --dev
   Run a web server that live updates for easier template development.

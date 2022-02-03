@@ -4,15 +4,29 @@ import commandLineArgs from 'command-line-args'
 import unzip from './src/unzip.js'
 import build from './src/build/index.js'
 import cleanup from './src/cleanup.js'
+import cleanCache from './src/clean-cache.js'
 import serve from './src/serve.js'
 import helpOutput from './src/help.js'
 
-const { source, expanded, output, templates, dev, help } = commandLineArgs([
+const {
+  source,
+  expanded,
+  output,
+  templates,
+  dev,
+  help,
+  include,
+  expandUrls,
+  clean,
+} = commandLineArgs([
   { name: 'source', alias: 's', type: String, defaultOption: true },
   { name: 'output', alias: 'o', type: String, defaultValue: './public' },
   { name: 'expanded', alias: 'e', type: Boolean, defaultValue: false },
   { name: 'dev', alias: 'd', type: Boolean, defaultValue: false },
+  { name: 'include', alias: 'i', type: String, defaultValue: 'tweets,dms' },
   { name: 'help', type: Boolean, defaultValue: false },
+  { name: 'expandUrls', type: Boolean, defaultValue: true },
+  { name: 'clean', type: Boolean, defaultValue: false },
   {
     name: 'templates',
     alias: 't',
@@ -21,15 +35,32 @@ const { source, expanded, output, templates, dev, help } = commandLineArgs([
   },
 ])
 
-if (help) {
-  console.log(helpOutput())
-} else {
+const includedData = include.split(',').map((item) => item.trim().toLowerCase())
+
+const run = () => {
+  if (clean) {
+    cleanCache().then((result) => {
+      console.log('Cleaned up URL cache')
+    })
+    return
+  }
+  if (help) {
+    console.log(helpOutput())
+    return
+  }
   unzip(source, expanded)
     .then((path) => {
-      if (dev) {
-        return serve(path, templates, output)
+      const args = {
+        source: path,
+        templates,
+        output,
+        include: includedData,
+        expandUrls,
       }
-      return build(path, templates, output)
+      if (dev) {
+        return serve(args)
+      }
+      return build(args)
     })
     .then((path) => {
       if (!expanded) {
@@ -38,3 +69,4 @@ if (help) {
       return
     })
 }
+run()

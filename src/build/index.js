@@ -3,12 +3,17 @@ import fs from 'fs/promises'
 import fsExists from 'fs.promises.exists'
 import indexPage from './index-page.js'
 import tweetsPage from './tweets.js'
+import resolveUrls from './resolve-urls.js'
 import nunjucks from './nunjucks-environment.js'
+import { DateTime } from 'luxon'
 
 const extractJson = (contents) =>
   JSON.parse(contents.replace(/window.[(A-Za-z0-9\.\_]* = /, ''))
 
-export default (source, templates, output) =>
+const tweetDate = (date) =>
+  DateTime.fromFormat(date, 'EEE MMM d HH:mm:ss ZZZ yyyy').valueOf()
+
+export default ({ source, templates, output, include, expandUrls }) =>
   new Promise(async (resolve, reject) => {
     const spinner = ora({
       spinner: 'boxBounce',
@@ -29,7 +34,7 @@ export default (source, templates, output) =>
 
     const style = await (await fs.readFile(`${templates}/style.css`)).toString()
 
-    const njkEnvironment = nunjucks(templates, style)
+    const njkEnvironment = nunjucks({ templates, style, include })
 
     const manifest = await fs
       .readFile(`${source}/data/manifest.js`)
@@ -42,12 +47,31 @@ export default (source, templates, output) =>
     const tweets = await fs
       .readFile(`${source}/data/tweet.js`)
       .then((contents) => extractJson(contents.toString()))
+      .then((tweets) =>
+        tweets.sort((a, b) =>
+          tweetDate(a.tweet.created_at) > tweetDate(b.tweet.created_at)
+            ? -1
+            : 1,
+        ),
+      )
+    let resolvedUrls = false
+    if (expandUrls) {
+      resolvedUrls = await resolveUrls({ tweets })
+    }
 
     if (!(await fsExists(output))) {
       await fs.mkdir(output)
     }
     await indexPage(njkEnvironment, { output, manifest, templates, account })
-    await tweetsPage(njkEnvironment, { output, templates, tweets, account })
+    if (include.indexOf('tweets') > -1) {
+      await tweetsPage(njkEnvironment, {
+        output,
+        templates,
+        tweets,
+        account,
+        resolvedUrls,
+      })
+    }
 
     resolve(source)
     spinner.stop()

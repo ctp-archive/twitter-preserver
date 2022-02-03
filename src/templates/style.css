@@ -7,6 +7,12 @@ body header {
 body header a,
 body header a:visited {
   color: black;
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+body header a:last-child,
+body header a:visited:last-child {
+  margin-right: 0;
 }
 
 .container {

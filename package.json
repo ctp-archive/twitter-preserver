@@ -12,6 +12,7 @@
     "twitter-archive": "cmd.js"
   },
   "dependencies": {
+    "axios": "^0.25.0",
     "browser-sync": "^2.27.7",
     "chokidar": "^3.5.3",
     "command-line-args": "^5.2.0",

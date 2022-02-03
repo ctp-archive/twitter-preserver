@@ -4,6 +4,7 @@
   <h1>{{account.username}} Tweets</h1>
   {%for tweet in tweets %}
     <div class="tweet">
+      <strong>{{tweet.created_at | dateFromTweet}}</strong>
       <p>{{tweet.full_text}}</p>
     </div>
   {% endfor %}
