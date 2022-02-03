@@ -1,3 +1,8 @@
 $link-color: rgb(65, 65, 207);
+$border-color: grey;
+$text-color: black;
+$body-background-color: white;
 
+@import 'header';
+@import 'container';
 @import 'typography';

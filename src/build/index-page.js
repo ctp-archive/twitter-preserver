@@ -1,6 +1,6 @@
 import fs from 'fs/promises'
 
-export default (njkEnvironment, { output, account }) =>
+export default (njkEnvironment, { output, manifest, account }) =>
   new Promise(async (resolve, reject) => {
     await fs.writeFile(
       `${output}/index.html`,
@@ -8,7 +8,8 @@ export default (njkEnvironment, { output, account }) =>
         account,
         pageTitle: `Archive of ${account.username} `,
         path: '',
-      })
+        manifest,
+      }),
     )
     resolve()
   })

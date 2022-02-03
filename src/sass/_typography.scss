@@ -3,19 +3,10 @@ body {
   margin: 0;
   font-size: 20px;
   line-height: 2rem;
+  color: $text-color;
+  background: $body-background-color;
   a,
   a:visited {
     color: $link-color;
-  }
-}
-
-header {
-  border-bottom: 1px solid black;
-  margin-bottom: 2rem;
-  padding: 0.5rem;
-  font-weight: bold;
-  a,
-  a:visited {
-    color: black;
   }
 }

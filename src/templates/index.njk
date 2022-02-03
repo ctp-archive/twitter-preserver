@@ -2,5 +2,8 @@
 
 {% block content %}
   <h1>{{account.username}}</h1>
+  <p>All the Tweets of <a href="https://twitter.com/{{account.username}}">{{account.accountDisplayName}}</a>.
+  This archive was generated from data downloaded using the Twitter Data Export 
+  tool on <strong>{{manifest.archiveInfo.generationDate | dateFromISO }}</strong>.
 
 {% endblock %}
