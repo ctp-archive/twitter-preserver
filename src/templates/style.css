@@ -4,6 +4,10 @@ body header {
   padding: 0.5rem;
   font-weight: bold;
 }
+body header .username {
+  display: inline-block;
+  margin-right: 2rem;
+}
 body header a,
 body header a:visited {
   color: black;

@@ -5,7 +5,7 @@
   {%for tweet in tweets %}
     <div class="tweet">
       <strong>{{tweet.created_at | dateFromTweet}}</strong>
-      <p>{{tweet.full_text}}</p>
+      <p>{{tweet.full_text | twitterBody | safe }}</p>
     </div>
   {% endfor %}
 {% endblock %}

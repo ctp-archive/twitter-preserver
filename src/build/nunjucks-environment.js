@@ -1,13 +1,26 @@
 import nunjucks from 'nunjucks'
 import { DateTime } from 'luxon'
+import Autolinker from 'autolinker'
 import allowedIncludes from '../includes.js'
 
 const dateFormat = DateTime.DATETIME_FULL
 
-export default ({ templates, style, include }) => {
+const twitterUrlRegex =
+  /http(s?):\/\/t.co\/([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g
+
+export default ({
+  templates,
+  style,
+  include,
+  account,
+  manifest,
+  resolvedUrls,
+}) => {
   const env = nunjucks.configure(templates)
 
   env.addGlobal('style', style)
+  env.addGlobal('account', account)
+  env.addGlobal('manifest', manifest)
 
   env.addGlobal(
     'include',
@@ -29,6 +42,23 @@ export default ({ templates, style, include }) => {
       str,
       'EEE MMM d HH:mm:ss ZZZ yyyy',
     ).toLocaleString(dateFormat)
+  })
+
+  env.addFilter('twitterBody', (str) => {
+    let result = str
+    if (resolvedUrls) {
+      const matches = str.match(twitterUrlRegex)
+      if (matches) {
+        matches.forEach((match) => {
+          const matchSearch = new RegExp(match, 'g')
+          const target = resolvedUrls.find(({ url }) => url === match)
+          if (target) {
+            result = result.replace(matchSearch, target.target)
+          }
+        })
+      }
+    }
+    return Autolinker.link(result, { stripPrefix: false })
   })
 
   return env

@@ -9,6 +9,7 @@
   <body>
     <header>
       <div class="container">
+        <span class="username">{{account.username}}</span>
         {%if include.tweets %}
           <a href="{{pagePath}}tweets.html">Tweets</a>
         {% endif %}

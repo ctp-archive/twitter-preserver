@@ -16,6 +16,7 @@ export default ({ tweets }) =>
         .readFile('./.cache/links.json')
         .then((result) => JSON.parse(result.toString()))
       resolve(cachedLinks)
+      return
     }
     const spinner = ora({
       spinner: 'boxBounce',

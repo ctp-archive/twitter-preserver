@@ -34,8 +34,6 @@ export default ({ source, templates, output, include, expandUrls }) =>
 
     const style = await (await fs.readFile(`${templates}/style.css`)).toString()
 
-    const njkEnvironment = nunjucks({ templates, style, include })
-
     const manifest = await fs
       .readFile(`${source}/data/manifest.js`)
       .then((contents) => extractJson(contents.toString()))
@@ -59,17 +57,25 @@ export default ({ source, templates, output, include, expandUrls }) =>
       resolvedUrls = await resolveUrls({ tweets })
     }
 
+    const njkEnvironment = nunjucks({
+      templates,
+      style,
+      include,
+      account,
+      manifest,
+      resolvedUrls,
+    })
+
     if (!(await fsExists(output))) {
       await fs.mkdir(output)
     }
-    await indexPage(njkEnvironment, { output, manifest, templates, account })
+    await indexPage(njkEnvironment, { output, templates })
+
     if (include.indexOf('tweets') > -1) {
       await tweetsPage(njkEnvironment, {
         output,
         templates,
         tweets,
-        account,
-        resolvedUrls,
       })
     }
 
