@@ -14,6 +14,7 @@ export default ({
   include,
   account,
   manifest,
+  profile,
   resolvedUrls,
 }) => {
   const env = nunjucks.configure(templates)
@@ -21,6 +22,7 @@ export default ({
   env.addGlobal('style', style)
   env.addGlobal('account', account)
   env.addGlobal('manifest', manifest)
+  env.addGlobal('profile', profile)
 
   env.addGlobal(
     'include',
@@ -35,6 +37,13 @@ export default ({
 
   env.addFilter('dateFromISO', (str) => {
     return DateTime.fromISO(str).toLocaleString(dateFormat)
+  })
+
+  env.addFilter('profileMediaFile', (str) => {
+    const url = str.split('/')
+    const file = url.pop()
+    const path = url.pop()
+    return `${path}-${file}`
   })
 
   env.addFilter('dateFromTweet', (str) => {

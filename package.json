@@ -22,7 +22,8 @@
     "fs.promises.exists": "^1.1.2",
     "luxon": "^2.3.0",
     "nunjucks": "^3.2.3",
-    "ora": "^6.0.1"
+    "ora": "^6.0.1",
+    "recursive-copy": "^2.0.13"
   },
   "scripts": {
     "build": "sass --no-source-map src/sass:src/templates"

@@ -5,6 +5,7 @@ import indexPage from './index-page.js'
 import tweetsPage from './tweets.js'
 import resolveUrls from './resolve-urls.js'
 import nunjucks from './nunjucks-environment.js'
+import copyMedia from './copy-media.js'
 import { DateTime } from 'luxon'
 
 const extractJson = (contents) =>
@@ -42,6 +43,10 @@ export default ({ source, templates, output, include, expandUrls }) =>
       .readFile(`${source}/data/account.js`)
       .then((contents) => extractJson(contents.toString())[0].account)
 
+    const profile = await fs
+      .readFile(`${source}/data/profile.js`)
+      .then((contents) => extractJson(contents.toString())[0].profile)
+
     const tweets = await fs
       .readFile(`${source}/data/tweet.js`)
       .then((contents) => extractJson(contents.toString()))
@@ -56,6 +61,7 @@ export default ({ source, templates, output, include, expandUrls }) =>
     if (expandUrls) {
       resolvedUrls = await resolveUrls({ tweets })
     }
+    await copyMedia({ source, include, output })
 
     const njkEnvironment = nunjucks({
       templates,
@@ -63,6 +69,7 @@ export default ({ source, templates, output, include, expandUrls }) =>
       include,
       account,
       manifest,
+      profile,
       resolvedUrls,
     })
 
