@@ -1,0 +1,32 @@
+{
+  "name": "twitter-archiver",
+  "version": "0.1",
+  "description": "Converts twitter exports to flat documents.",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=12"
+  },
+  "type": "module",
+  "bin": {
+    "twitter-archive": "cmd.js"
+  },
+  "dependencies": {
+    "browser-sync": "^2.27.7",
+    "chokidar": "^3.5.3",
+    "command-line-args": "^5.2.0",
+    "crypto": "^1.0.1",
+    "extract-zip": "^2.0.1",
+    "fs.promises.exists": "^1.1.2",
+    "luxon": "^2.3.0",
+    "nunjucks": "^3.2.3",
+    "ora": "^6.0.1"
+  },
+  "scripts": {
+    "build": "sass --no-source-map src/sass:src/templates"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "sass": "^1.49.7"
+  }
+}
