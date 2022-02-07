@@ -1,5 +1,5 @@
 {
-  "name": "twitter-archiver",
+  "name": "twitter-preserver",
   "version": "0.1",
   "description": "Converts twitter exports to flat documents.",
   "main": "index.js",
