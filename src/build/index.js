@@ -6,6 +6,7 @@ import tweetsPage from './tweets.js'
 import resolveUrls from './resolve-urls.js'
 import nunjucks from './nunjucks-environment.js'
 import copyMedia from './copy-media.js'
+import crypto from 'crypto'
 import { DateTime } from 'luxon'
 
 const extractJson = (contents) =>
@@ -35,9 +36,16 @@ export default ({ source, templates, output, include, expandUrls }) =>
 
     const style = await (await fs.readFile(`${templates}/style.css`)).toString()
 
-    const manifest = await fs
-      .readFile(`${source}/data/manifest.js`)
-      .then((contents) => extractJson(contents.toString()))
+    const manifestContent = await (
+      await fs.readFile(`${source}/data/manifest.js`)
+    ).toString()
+
+    const checksum = crypto
+      .createHash('sha1')
+      .update(manifestContent)
+      .digest('hex')
+
+    const manifest = extractJson(manifestContent)
 
     const account = await fs
       .readFile(`${source}/data/account.js`)
@@ -59,7 +67,7 @@ export default ({ source, templates, output, include, expandUrls }) =>
       )
     let resolvedUrls = false
     if (expandUrls) {
-      resolvedUrls = await resolveUrls({ tweets })
+      resolvedUrls = await resolveUrls({ tweets, profile, checksum })
     }
     await copyMedia({ source, include, output })
 

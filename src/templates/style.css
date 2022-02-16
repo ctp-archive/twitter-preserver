@@ -42,3 +42,13 @@ body a,
 body a:visited {
   color: #4141cf;
 }
+
+h1.user-title {
+  display: flex;
+  align-items: center;
+}
+h1.user-title img {
+  max-width: 60px;
+  display: inline-block;
+  margin-right: 0.5rem;
+}

@@ -5,15 +5,15 @@ import https from 'https'
 
 const regex = /http(s?):\/\/t.co\/([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g
 
-export default ({ tweets }) =>
+export default ({ tweets, profile, checksum }) =>
   new Promise(async (resolve, reject) => {
     const links = []
     if (!(await fsExists('./.cache'))) {
       await fs.mkdir('./.cache')
     }
-    if (await fsExists('./.cache/links.json')) {
+    if (await fsExists(`./.cache/links-${checksum}.json`)) {
       const cachedLinks = await fs
-        .readFile('./.cache/links.json')
+        .readFile(`./.cache/links-${checksum}.json`)
         .then((result) => JSON.parse(result.toString()))
       resolve(cachedLinks)
       return
@@ -34,9 +34,15 @@ export default ({ tweets }) =>
     })
     let current = 0
     const resolvedUrls = []
+    if (profile.description.website) {
+      links.push(profile.description.website)
+    }
     const fetch = async () => {
       if (typeof links[current] === 'undefined') {
-        await fs.writeFile('./.cache/links.json', JSON.stringify(resolvedUrls))
+        await fs.writeFile(
+          `./.cache/links-${checksum}.json`,
+          JSON.stringify(resolvedUrls),
+        )
         spinner.stop()
         resolve(resolvedUrls)
         return

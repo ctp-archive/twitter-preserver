@@ -10,3 +10,15 @@ body {
     color: $link-color;
   }
 }
+
+h1 {
+  &.user-title {
+    display: flex;
+    align-items: center;
+    img {
+      max-width: 60px;
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+  }
+}

@@ -42,8 +42,7 @@ export default ({
   env.addFilter('profileMediaFile', (str) => {
     const url = str.split('/')
     const file = url.pop()
-    const path = url.pop()
-    return `${path}-${file}`
+    return `${file}`
   })
 
   env.addFilter('dateFromTweet', (str) => {
@@ -51,6 +50,16 @@ export default ({
       str,
       'EEE MMM d HH:mm:ss ZZZ yyyy',
     ).toLocaleString(dateFormat)
+  })
+
+  env.addFilter('twitterUrl', (str) => {
+    if (resolvedUrls) {
+      const result = resolvedUrls.find(({ url }) => url === str)
+      if (result) {
+        return result.target
+      }
+    }
+    return str
   })
 
   env.addFilter('twitterBody', (str) => {
