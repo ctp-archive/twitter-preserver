@@ -6,6 +6,13 @@
     <div class="tweet">
       <strong>{{tweet.created_at | dateFromTweet}}</strong>
       <p>{{tweet.full_text | twitterBody | safe }}</p>
-    </div>
-  {% endfor %}
-{% endblock %}
+      {% if tweet.entities.media %}
+        {%for media in tweet.entities.media %}
+          <div class="media">
+            <img src="{{media | mediaUrl }}" alt="" aria-hidden/>
+          </div>
+          {% endfor%}
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% endblock %}
