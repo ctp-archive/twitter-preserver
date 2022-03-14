@@ -3,9 +3,11 @@ import fs from 'fs/promises'
 import fsExists from 'fs.promises.exists'
 import indexPage from './index-page.js'
 import tweetsPage from './tweets.js'
+import threadPages from './thread-pages.js'
 import resolveUrls from './resolve-urls.js'
 import nunjucks from './nunjucks-environment.js'
 import copyMedia from './copy-media.js'
+import addTweetThreads from './tweet-threads.js'
 import crypto from 'crypto'
 import { DateTime } from 'luxon'
 
@@ -65,6 +67,9 @@ export default ({ source, templates, output, include, expandUrls }) =>
             : 1,
         ),
       )
+
+    addTweetThreads(tweets, account.accountId)
+
     let resolvedUrls = false
     if (expandUrls) {
       resolvedUrls = await resolveUrls({ tweets, profile, checksum })
@@ -88,6 +93,11 @@ export default ({ source, templates, output, include, expandUrls }) =>
 
     if (include.indexOf('tweets') > -1) {
       await tweetsPage(njkEnvironment, {
+        output,
+        templates,
+        tweets,
+      })
+      await threadPages(njkEnvironment, {
         output,
         templates,
         tweets,

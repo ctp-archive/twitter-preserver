@@ -1,0 +1,37 @@
+.tweet {
+  border: 1px solid $border-color;
+  margin-bottom: 1.5rem;
+  h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 1rem 0 0 1rem;
+    a {
+      color: $text-color;
+    }
+  }
+  blockquote {
+    padding: 1rem;
+    margin: 0;
+  }
+  .media {
+    margin: 1rem;
+    img {
+      max-width: 100%;
+    }
+  }
+  .meta {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 1rem;
+    border-top: 1px solid $border-color;
+    li {
+      display: inline-block;
+      margin-right: 2rem;
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+}

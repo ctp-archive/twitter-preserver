@@ -1,7 +1,7 @@
 {% extends "includes/base.njk" %}
 
 {% block content %}
-  <h1>{{account.username}} Tweets</h1>
+  <h1>{{account.username}} Tweet thread</h1>
   {%for tweet in tweets %}
     <div class="tweet">
       <h2>
@@ -18,12 +18,6 @@
         <ul class="meta" aria-label="{{tweet.favorite_count}} likes and {{tweet.retweet_count}} retweets">
           <li>Likes <span>{{tweet.favorite_count}}</span></li>
           <li>Retweets <span>{{tweet.retweet_count}}</span></li>
-          {% if tweet._parent_thread %}
-            <li>
-              <span>
-                <a href="thread/{{tweet._parent_thread}}.html">Thread</span></a>
-            </li>
-          {% endif %}
         </ul>
       </div>
     {% endfor %}

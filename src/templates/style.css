@@ -52,3 +52,41 @@ h1.user-title img {
   display: inline-block;
   margin-right: 0.5rem;
 }
+
+.tweet {
+  border: 1px solid grey;
+  margin-bottom: 1.5rem;
+}
+.tweet h2 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 1rem 0 0 1rem;
+}
+.tweet h2 a {
+  color: black;
+}
+.tweet blockquote {
+  padding: 1rem;
+  margin: 0;
+}
+.tweet .media {
+  margin: 1rem;
+}
+.tweet .media img {
+  max-width: 100%;
+}
+.tweet .meta {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 1rem;
+  border-top: 1px solid grey;
+}
+.tweet .meta li {
+  display: inline-block;
+  margin-right: 2rem;
+}
+.tweet .meta li span {
+  font-weight: bold;
+}

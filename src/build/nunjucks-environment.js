@@ -45,9 +45,9 @@ export default ({
     return `${file}`
   })
 
-  env.addFilter('mediaUrl', (media) => {
-    const filename = media.media_url.split('/').pop()
-    return `media/tweet_media/${media.id_str}-${filename}`
+  env.addFilter('mediaUrl', (url, id) => {
+    const filename = url.split('/').pop()
+    return `media/tweet_media/${id}-${filename}`
   })
 
   env.addFilter('dateFromTweet', (str) => {
