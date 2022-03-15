@@ -8,6 +8,7 @@
         <a href="#{{tweet.id}}" id="{{tweet.id}}">{{tweet.created_at | dateFromTweet}}</a>
       </h2>
       <blockquote>{{tweet.full_text | twitterBody | safe }}</blockquote>
+
       {% if tweet.entities.media %}
         {%for media in tweet.entities.media %}
           <div class="media">
@@ -18,6 +19,9 @@
         <ul class="meta" aria-label="{{tweet.favorite_count}} likes and {{tweet.retweet_count}} retweets">
           <li>Likes <span>{{tweet.favorite_count}}</span></li>
           <li>Retweets <span>{{tweet.retweet_count}}</span></li>
+          <li class="twitter-link">
+            <a href="https://twitter.com/{{account.username}}/status/{{tweet.id_str}}">Open in Twitter</a>
+          </li>
         </ul>
       </div>
     {% endfor %}

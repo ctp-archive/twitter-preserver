@@ -1,13 +1,20 @@
 import fs from 'fs/promises'
 import ora from 'ora'
+import chalk from 'chalk'
 import fsExists from 'fs.promises.exists'
-import https from 'https'
+import axios from 'axios'
+import path from 'path'
+import getMeta from 'lets-get-meta'
 
 const regex = /http(s?):\/\/t.co\/([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g
 
 export default ({ tweets, profile, checksum }) =>
   new Promise(async (resolve, reject) => {
-    const links = []
+    const spinner = ora({
+      spinner: 'boxBounce',
+      text: 'Resolving Twitter URLs. This may take a while',
+    }).start()
+
     if (!(await fsExists('./.cache'))) {
       await fs.mkdir('./.cache')
     }
@@ -15,55 +22,57 @@ export default ({ tweets, profile, checksum }) =>
       const cachedLinks = await fs
         .readFile(`./.cache/links-${checksum}.json`)
         .then((result) => JSON.parse(result.toString()))
+      spinner.stopAndPersist({
+        symbol: chalk.green('✔️'),
+        text: `Loaded ${cachedLinks.length.toLocaleString()} links from cache`,
+      })
       resolve(cachedLinks)
       return
     }
-    const spinner = ora({
-      spinner: 'boxBounce',
-      text: 'Resolving Twitter URLs. This may take a while',
-    }).start()
-    tweets.forEach(({ tweet }) => {
-      const matches = tweet.full_text.match(regex)
-      if (matches) {
-        matches.forEach((match) => {
-          if (links.indexOf(match) === -1) {
-            links.push(match)
-          }
-        })
-      }
-    })
-    let current = 0
-    const resolvedUrls = []
-    if (profile.description.website) {
-      links.push(profile.description.website)
-    }
+
+    const links = tweets.flatMap(({ tweet }) => tweet.entities.urls)
+
+    let current = -1
+
     const fetch = async () => {
+      current += 1
       if (typeof links[current] === 'undefined') {
+        console.log(links)
         await fs.writeFile(
           `./.cache/links-${checksum}.json`,
-          JSON.stringify(resolvedUrls),
+          JSON.stringify(links),
         )
-        spinner.stop()
-        resolve(resolvedUrls)
+
+        spinner.stopAndPersist({
+          symbol: chalk.green('✔️'),
+          text: `Loaded ${links.length.toLocaleString()} links`,
+        })
+        resolve(links)
         return
       }
-      spinner.text = `Fetching ${links[current]}`
-      https.get(links[current], (response, error) => {
-        if (error) {
-          reject(`HTTP error when fetching ${links[current]}`)
-          return
-        }
-        resolvedUrls.push({
-          url: links[current],
-          code: response.statusCode,
-          target:
-            typeof response.headers.location !== 'undefined'
-              ? response.headers.location
-              : false,
+
+      const { expanded_url } = links[current]
+
+      spinner.text = `Getting metadata from ${expanded_url}`
+
+      const extension = path.extname(expanded_url)
+
+      if (['htm', 'html', '', false].indexOf(extension) === -1) {
+        setImmediate(() => fetch())
+      }
+      await axios
+        .get(expanded_url)
+        .then((result) => {
+          if (result.status === 200) {
+            links[current].meta = getMeta(result.data)
+          }
         })
-        current += 1
-        fetch()
-      })
+        .catch((error) => {
+          spinner.text = `Error fetching ${expanded_url}`
+        })
+
+      setImmediate(() => fetch())
     }
+
     fetch()
   })

@@ -58,7 +58,7 @@ h1.user-title img {
   margin-bottom: 1.5rem;
 }
 .tweet h2 {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: bold;
   margin: 1rem 0 0 1rem;
 }
@@ -89,4 +89,8 @@ h1.user-title img {
 }
 .tweet .meta li span {
   font-weight: bold;
+}
+.tweet .twitter-link {
+  margin-left: auto;
+  margin-right: 0;
 }

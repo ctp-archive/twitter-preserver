@@ -2,7 +2,7 @@
   border: 1px solid $border-color;
   margin-bottom: 1.5rem;
   h2 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
     margin: 1rem 0 0 1rem;
     a {
@@ -33,5 +33,9 @@
         font-weight: bold;
       }
     }
+  }
+  .twitter-link {
+    margin-left: auto;
+    margin-right: 0;
   }
 }

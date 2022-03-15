@@ -24,6 +24,9 @@
                 <a href="thread/{{tweet._parent_thread}}.html">Thread</span></a>
             </li>
           {% endif %}
+          <li class="twitter-link">
+            <a href="https://twitter.com/{{account.username}}/status/{{tweet.id_str}}">Open in Twitter</a>
+          </li>
         </ul>
       </div>
     {% endfor %}

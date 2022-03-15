@@ -61,7 +61,7 @@ export default ({
     if (resolvedUrls) {
       const result = resolvedUrls.find(({ url }) => url === str)
       if (result) {
-        return result.target
+        return result.expanded_url
       }
     }
     return str
@@ -76,7 +76,7 @@ export default ({
           const matchSearch = new RegExp(match, 'g')
           const target = resolvedUrls.find(({ url }) => url === match)
           if (target) {
-            result = result.replace(matchSearch, target.target)
+            result = result.replace(matchSearch, target.expanded_url)
           }
         })
       }

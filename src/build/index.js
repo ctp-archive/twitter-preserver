@@ -19,11 +19,6 @@ const tweetDate = (date) =>
 
 export default ({ source, templates, output, include, expandUrls }) =>
   new Promise(async (resolve, reject) => {
-    const spinner = ora({
-      spinner: 'boxBounce',
-      text: 'Building files',
-    }).start()
-
     if (!(await fsExists(`${source}/Your archive.html`))) {
       reject(
         `The provided input directory or ZIP file is not a Twitter archive.`,
@@ -74,6 +69,7 @@ export default ({ source, templates, output, include, expandUrls }) =>
     if (expandUrls) {
       resolvedUrls = await resolveUrls({ tweets, profile, checksum })
     }
+
     await copyMedia({ source, include, output })
 
     const njkEnvironment = nunjucks({
@@ -105,5 +101,4 @@ export default ({ source, templates, output, include, expandUrls }) =>
     }
 
     resolve(source)
-    spinner.stop()
   })
