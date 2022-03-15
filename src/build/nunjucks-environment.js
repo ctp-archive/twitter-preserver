@@ -67,7 +67,7 @@ export default ({
     return str
   })
 
-  env.addFilter('twitterBody', (str) => {
+  env.addFilter('twitterBody', (str, tweet) => {
     let result = str
     if (resolvedUrls) {
       const matches = str.match(twitterUrlRegex)

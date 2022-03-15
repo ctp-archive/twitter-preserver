@@ -2,7 +2,7 @@ import fs from 'fs/promises'
 import ora from 'ora'
 import chalk from 'chalk'
 import fsExists from 'fs.promises.exists'
-import axios from 'axios'
+import fetch from 'node-fetch'
 import path from 'path'
 import getMeta from 'lets-get-meta'
 
@@ -32,12 +32,27 @@ export default ({ tweets, profile, checksum }) =>
 
     const links = tweets.flatMap(({ tweet }) => tweet.entities.urls)
 
+    if (profile.description.website.search(regex) > -1) {
+      spinner.text = `Resolving profile website ${profile.description.website}`
+      await fetch(profile.description.website, {
+        method: 'HEAD',
+        redirect: 'manual',
+      })
+        .then((result) => {
+          const location = result.headers.get('location')
+          links.push({
+            url: profile.description.website,
+            expanded_url: location,
+            display_url: location.replace(/http(s?):\/\//g, ''),
+          })
+        })
+        .catch((error) => {})
+    }
     let current = -1
 
-    const fetch = async () => {
+    const getMetadata = async () => {
       current += 1
       if (typeof links[current] === 'undefined') {
-        console.log(links)
         await fs.writeFile(
           `./.cache/links-${checksum}.json`,
           JSON.stringify(links),
@@ -58,21 +73,20 @@ export default ({ tweets, profile, checksum }) =>
       const extension = path.extname(expanded_url)
 
       if (['htm', 'html', '', false].indexOf(extension) === -1) {
-        setImmediate(() => fetch())
+        setImmediate(() => getMetadata())
       }
-      await axios
-        .get(expanded_url)
-        .then((result) => {
+      await fetch(expanded_url)
+        .then(async (result) => {
           if (result.status === 200) {
-            links[current].meta = getMeta(result.data)
+            links[current].meta = getMeta(await result.text())
           }
         })
         .catch((error) => {
           spinner.text = `Error fetching ${expanded_url}`
         })
 
-      setImmediate(() => fetch())
+      setImmediate(() => getMetadata())
     }
 
-    fetch()
+    getMetadata()
   })

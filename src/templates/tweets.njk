@@ -7,7 +7,7 @@
       <h2>
         <a href="#{{tweet.id}}" id="{{tweet.id}}">{{tweet.created_at | dateFromTweet}}</a>
       </h2>
-      <blockquote>{{tweet.full_text | twitterBody | safe }}</blockquote>
+      <blockquote>{{tweet.full_text | twitterBody(tweet) | safe }}</blockquote>
       {% if tweet.entities.media %}
         {%for media in tweet.entities.media %}
           <div class="media">

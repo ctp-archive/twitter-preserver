@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "autolinker": "^3.14.3",
-    "axios": "^0.26.1",
     "browser-sync": "^2.27.7",
     "chalk": "^5.0.1",
     "chokidar": "^3.5.3",
@@ -23,6 +22,7 @@
     "fs.promises.exists": "^1.1.2",
     "lets-get-meta": "^2.1.1",
     "luxon": "^2.3.0",
+    "node-fetch": "^3.2.3",
     "nunjucks": "^3.2.3",
     "ora": "^6.0.1",
     "recursive-copy": "^2.0.13"
