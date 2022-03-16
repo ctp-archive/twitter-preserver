@@ -1,5 +1,6 @@
 import nunjucks from 'nunjucks'
 import { DateTime } from 'luxon'
+import path from 'path'
 import allowedIncludes from '../includes.js'
 
 const dateFormat = DateTime.DATETIME_FULL
@@ -66,7 +67,7 @@ export default ({
     return str
   })
 
-  env.addFilter('twitterBody', (str, tweet) => {
+  env.addFilter('twitterBody', (str, tweet, tweetLinkPrefix) => {
     let result = str
     if (resolvedUrls) {
       const matches = str.match(twitterUrlRegex)
@@ -86,10 +87,22 @@ export default ({
             ) {
               result = result.replace(matchSearch, '')
             } else {
-              result = result.replace(
-                matchSearch,
-                `<a href="${target.expanded_url}">${target.display_url}</a>`,
-              )
+              if (
+                target.expanded_url.search(
+                  `twitter.com/${account.username}/status/`,
+                ) > -1
+              ) {
+                const urlPath = path.parse(target.expanded_url)
+                result = result.replace(
+                  matchSearch,
+                  `<a href="${tweetLinkPrefix}#${urlPath.name}">${urlPath.name}</a>`,
+                )
+              } else {
+                result = result.replace(
+                  matchSearch,
+                  `<a href="${target.expanded_url}">${target.display_url}</a>`,
+                )
+              }
             }
           }
         })
@@ -97,19 +110,6 @@ export default ({
     }
 
     return result
-  })
-
-  env.addFilter('socialCardValue', ({ meta }, type) => {
-    if (typeof meta[`og:${type}`] !== 'undefined') {
-      return meta[`og:${type}`]
-    }
-    if (typeof meta[`twitter:${type}`] !== 'undefined') {
-      return meta[`twitter:${type}`]
-    }
-    if (typeof meta[type] !== 'undefined') {
-      return meta[type]
-    }
-    return false
   })
 
   return env

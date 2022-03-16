@@ -3,9 +3,6 @@ import ora from 'ora'
 import chalk from 'chalk'
 import fsExists from 'fs.promises.exists'
 import fetch from 'node-fetch'
-import path from 'path'
-import getMeta from 'lets-get-meta'
-import { linkSync } from 'fs'
 
 const regex = /http(s?):\/\/t.co\/([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g
 
@@ -73,8 +70,20 @@ export default ({ tweets, profile, checksum }) =>
       current += 1
 
       if (typeof links[current] === 'undefined') {
-        current = -1
-        setImmediate(() => getMetadata())
+        await fs.writeFile(
+          `./.cache/links-${checksum}.json`,
+          JSON.stringify(
+            links.map((link) => {
+              link.display_url = link.expanded_url.replace(/http(s?):\/\//g, '')
+              return link
+            }),
+          ),
+        )
+        spinner.stopAndPersist({
+          symbol: chalk.green('✔️'),
+          text: `Loaded ${links.length.toLocaleString()} links`,
+        })
+        resolve(links)
         return
       }
       if (
@@ -98,47 +107,5 @@ export default ({ tweets, profile, checksum }) =>
       setImmediate(() => findTwitterLinks())
     }
 
-    const getMetadata = async () => {
-      current += 1
-      if (typeof links[current] === 'undefined') {
-        await fs.writeFile(
-          `./.cache/links-${checksum}.json`,
-          JSON.stringify(links),
-        )
-
-        spinner.stopAndPersist({
-          symbol: chalk.green('✔️'),
-          text: `Loaded ${links.length.toLocaleString()} links`,
-        })
-        resolve(links)
-        return
-      }
-
-      const { expanded_url, twitter_link } = links[current]
-
-      if (!expanded_url || twitter_link) {
-        setImmediate(() => getMetadata())
-        return
-      }
-
-      spinner.text = `Getting metadata from ${expanded_url}`
-
-      const extension = path.extname(expanded_url)
-
-      if (['htm', 'html', '', false].indexOf(extension) === -1) {
-        setImmediate(() => getMetadata())
-      }
-      await fetch(expanded_url)
-        .then(async (result) => {
-          if (result.status === 200) {
-            links[current].meta = getMeta(await result.text())
-          }
-        })
-        .catch((error) => {
-          spinner.text = `Error fetching ${expanded_url}`
-        })
-
-      setImmediate(() => getMetadata())
-    }
     findTwitterLinks()
   })
