@@ -3,6 +3,7 @@ import fs from 'fs/promises'
 import fsExists from 'fs.promises.exists'
 import indexPage from './index-page.js'
 import tweetsPage from './tweets.js'
+import dmsPage from './dms.js'
 import threadPages from './thread-pages.js'
 import resolveUrls from './resolve-urls.js'
 import nunjucks from './nunjucks-environment.js'
@@ -13,9 +14,6 @@ import { DateTime } from 'luxon'
 
 const extractJson = (contents) =>
   JSON.parse(contents.replace(/window.[(A-Za-z0-9\.\_]* = /, ''))
-
-const tweetDate = (date) =>
-  DateTime.fromFormat(date, 'EEE MMM d HH:mm:ss ZZZ yyyy').valueOf()
 
 export default ({ source, templates, output, include, expandUrls }) =>
   new Promise(async (resolve, reject) => {
@@ -48,6 +46,10 @@ export default ({ source, templates, output, include, expandUrls }) =>
       .readFile(`${source}/data/account.js`)
       .then((contents) => extractJson(contents.toString())[0].account)
 
+    const verified = await fs
+      .readFile(`${source}/data/verified.js`)
+      .then((contents) => extractJson(contents.toString())[0].verified)
+
     const profile = await fs
       .readFile(`${source}/data/profile.js`)
       .then((contents) => extractJson(contents.toString())[0].profile)
@@ -55,13 +57,10 @@ export default ({ source, templates, output, include, expandUrls }) =>
     const tweets = await fs
       .readFile(`${source}/data/tweet.js`)
       .then((contents) => extractJson(contents.toString()))
-      .then((tweets) =>
-        tweets.sort((a, b) =>
-          tweetDate(a.tweet.created_at) > tweetDate(b.tweet.created_at)
-            ? -1
-            : 1,
-        ),
-      )
+
+    const dms = await fs
+      .readFile(`${source}/data/direct-messages.js`)
+      .then((contents) => extractJson(contents.toString()))
 
     addTweetThreads(tweets, account.accountId)
 
@@ -85,18 +84,23 @@ export default ({ source, templates, output, include, expandUrls }) =>
     if (!(await fsExists(output))) {
       await fs.mkdir(output)
     }
-    await indexPage(njkEnvironment, { output, templates })
+    await indexPage(njkEnvironment, { output, verified })
 
     if (include.indexOf('tweets') > -1) {
       await tweetsPage(njkEnvironment, {
         output,
-        templates,
         tweets,
       })
       await threadPages(njkEnvironment, {
         output,
-        templates,
         tweets,
+      })
+    }
+    if (include.indexOf('dms') > -1) {
+      await dmsPage(njkEnvironment, {
+        output,
+        templates,
+        dms,
       })
     }
 

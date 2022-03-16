@@ -1,0 +1,8 @@
+{% extends "includes/base.njk" %}
+
+{% block content %}
+  <h1>{{account.username}} Direct Messages</h1>
+  {%for dm in dms %}
+    {{dm.id}}
+  {% endfor %}
+{% endblock %}

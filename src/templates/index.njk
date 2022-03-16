@@ -3,6 +3,8 @@
 {% block content %}
   <h1 class="user-title">
     <img src="media/profile_media/{{account.accountId}}-{{profile.avatarMediaUrl | profileMediaFile }}"/>{{account.username}}
+    {% if verified.verified %}
+      <span class="verified">Verified</span>{% endif %}
   </h1>
   <p>All the Tweets of <a href="https://twitter.com/{{account.username}}">{{account.accountDisplayName}}</a>.
   <p>
