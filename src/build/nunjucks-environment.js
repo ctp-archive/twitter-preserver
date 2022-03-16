@@ -93,9 +93,10 @@ export default ({
                 ) > -1
               ) {
                 const urlPath = path.parse(target.expanded_url)
+                const name = urlPath.name.replace(/\?(.*)/g, '')
                 result = result.replace(
                   matchSearch,
-                  `<a href="${tweetLinkPrefix}#${urlPath.name}">${urlPath.name}</a>`,
+                  `<a href="${tweetLinkPrefix}tweets.html#${name}">[Tweet ${name}]</a>`,
                 )
               } else {
                 result = result.replace(

@@ -72,12 +72,7 @@ export default ({ tweets, profile, checksum }) =>
       if (typeof links[current] === 'undefined') {
         await fs.writeFile(
           `./.cache/links-${checksum}.json`,
-          JSON.stringify(
-            links.map((link) => {
-              link.display_url = link.expanded_url.replace(/http(s?):\/\//g, '')
-              return link
-            }),
-          ),
+          JSON.stringify(links),
         )
         spinner.stopAndPersist({
           symbol: chalk.green('✔️'),

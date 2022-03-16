@@ -9,12 +9,12 @@
   <body>
     <header>
       <div class="container">
-        <a class="username" href={% if homePath %}{{homePath}}{% else %}#{% endif %}>{{account.username}}</a>
+        <a class="username" href="{{pathPrefix}}index.html">{{account.username}}</a>
         {%if include.tweets %}
-          <a href="{{pagePath}}tweets.html">Tweets</a>
+          <a href="{{pathPrefix}}tweets.html">Tweets</a>
         {% endif %}
         {%if include.dms %}
-          <a href="{{pagePath}}dms.html">Direct messages</a>
+          <a href="{{pathPrefix}}dms.html">Direct messages</a>
         {% endif %}
       </div>
     </header>

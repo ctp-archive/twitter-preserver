@@ -7,7 +7,7 @@ export default (njkEnvironment, { output, tweets }) =>
       njkEnvironment.render('tweets.njk', {
         pageTitle: `Tweets`,
         homePath: '../index.html',
-        tweetLinkPrefix: '',
+        pathPrefix: '',
         path: '',
         tweets: tweets.map((tweet) => tweet.tweet),
       }),
