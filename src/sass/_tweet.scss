@@ -1,5 +1,6 @@
 .tweet {
   border: 1px solid $border-color;
+  border-radius: 4px;
   margin-bottom: 1.5rem;
   h2 {
     font-size: 1.1rem;
@@ -7,6 +8,11 @@
     margin: 1rem 0 0 1rem;
     a {
       color: $text-color;
+    }
+    span {
+      color: $border-color;
+      font-size: 0.8rem;
+      font-weight: normal;
     }
   }
   blockquote {
@@ -17,6 +23,33 @@
     margin: 1rem;
     img {
       max-width: 100%;
+    }
+  }
+  .social-card {
+    margin: 1rem;
+    border-radius: 4px;
+    border: 1px solid $border-color;
+    margin: 1rem auto;
+
+    @media screen and (min-width: 1100px) {
+      max-width: 600px;
+    }
+    h3 {
+      font-size: 1rem;
+    }
+    h3,
+    p {
+      padding: 0 1rem;
+    }
+    a {
+      display: block;
+      padding: 0.5rem;
+      border-top: 1px solid $border-color;
+      color: $border-color;
+    }
+    img {
+      max-width: 100%;
+      border-radius: 4px 4px 0 0;
     }
   }
   .meta {

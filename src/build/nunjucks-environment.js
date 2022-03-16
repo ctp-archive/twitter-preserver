@@ -1,6 +1,5 @@
 import nunjucks from 'nunjucks'
 import { DateTime } from 'luxon'
-import Autolinker from 'autolinker'
 import allowedIncludes from '../includes.js'
 
 const dateFormat = DateTime.DATETIME_FULL
@@ -76,12 +75,41 @@ export default ({
           const matchSearch = new RegExp(match, 'g')
           const target = resolvedUrls.find(({ url }) => url === match)
           if (target) {
-            result = result.replace(matchSearch, target.expanded_url)
+            /*
+             *  Remove URLs that point to the current Tweet's media files.
+             */
+            if (
+              typeof tweet.entities.media !== 'undefined' &&
+              tweet.entities.media.filter(
+                (media) => media.expanded_url === target.expanded_url,
+              ).length
+            ) {
+              result = result.replace(matchSearch, '')
+            } else {
+              result = result.replace(
+                matchSearch,
+                `<a href="${target.expanded_url}">${target.display_url}</a>`,
+              )
+            }
           }
         })
       }
     }
-    return Autolinker.link(result, { stripPrefix: false })
+
+    return result
+  })
+
+  env.addFilter('socialCardValue', ({ meta }, type) => {
+    if (typeof meta[`og:${type}`] !== 'undefined') {
+      return meta[`og:${type}`]
+    }
+    if (typeof meta[`twitter:${type}`] !== 'undefined') {
+      return meta[`twitter:${type}`]
+    }
+    if (typeof meta[type] !== 'undefined') {
+      return meta[type]
+    }
+    return false
   })
 
   return env

@@ -55,6 +55,7 @@ h1.user-title img {
 
 .tweet {
   border: 1px solid grey;
+  border-radius: 4px;
   margin-bottom: 1.5rem;
 }
 .tweet h2 {
@@ -65,6 +66,11 @@ h1.user-title img {
 .tweet h2 a {
   color: black;
 }
+.tweet h2 span {
+  color: grey;
+  font-size: 0.8rem;
+  font-weight: normal;
+}
 .tweet blockquote {
   padding: 1rem;
   margin: 0;
@@ -74,6 +80,34 @@ h1.user-title img {
 }
 .tweet .media img {
   max-width: 100%;
+}
+.tweet .social-card {
+  margin: 1rem;
+  border-radius: 4px;
+  border: 1px solid grey;
+  margin: 1rem auto;
+}
+@media screen and (min-width: 1100px) {
+  .tweet .social-card {
+    max-width: 600px;
+  }
+}
+.tweet .social-card h3 {
+  font-size: 1rem;
+}
+.tweet .social-card h3,
+.tweet .social-card p {
+  padding: 0 1rem;
+}
+.tweet .social-card a {
+  display: block;
+  padding: 0.5rem;
+  border-top: 1px solid grey;
+  color: grey;
+}
+.tweet .social-card img {
+  max-width: 100%;
+  border-radius: 4px 4px 0 0;
 }
 .tweet .meta {
   list-style-type: none;

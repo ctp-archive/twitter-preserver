@@ -5,6 +5,7 @@ import fsExists from 'fs.promises.exists'
 import fetch from 'node-fetch'
 import path from 'path'
 import getMeta from 'lets-get-meta'
+import { linkSync } from 'fs'
 
 const regex = /http(s?):\/\/t.co\/([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g
 
@@ -42,13 +43,60 @@ export default ({ tweets, profile, checksum }) =>
           const location = result.headers.get('location')
           links.push({
             url: profile.description.website,
+            twitter_link: false,
             expanded_url: location,
             display_url: location.replace(/http(s?):\/\//g, ''),
           })
         })
         .catch((error) => {})
     }
+
+    tweets.forEach(({ tweet }) => {
+      const matches = tweet.full_text.match(regex)
+      if (matches) {
+        matches.forEach((match) => {
+          if (typeof links.find((link) => link.url === match) === 'undefined') {
+            links.push({
+              url: match,
+              twitter_link: true,
+              expanded_url: false,
+              display_url: false,
+            })
+          }
+        })
+      }
+    })
+
     let current = -1
+
+    const findTwitterLinks = async () => {
+      current += 1
+
+      if (typeof links[current] === 'undefined') {
+        current = -1
+        setImmediate(() => getMetadata())
+        return
+      }
+      if (
+        typeof links[current].twitter_link === 'undefined' ||
+        !links[current].twitter_link
+      ) {
+        setImmediate(() => findTwitterLinks())
+        return
+      }
+      spinner.text = `Resolving Twitter link ${links[current].url}`
+      await fetch(links[current].url, {
+        method: 'HEAD',
+        redirect: 'manual',
+      })
+        .then((result) => {
+          const location = result.headers.get('location')
+          links[current].expanded_url = location
+          links[current].display_url = location.replace(/http(s?):\/\//g, '')
+        })
+        .catch((error) => {})
+      setImmediate(() => findTwitterLinks())
+    }
 
     const getMetadata = async () => {
       current += 1
@@ -66,7 +114,12 @@ export default ({ tweets, profile, checksum }) =>
         return
       }
 
-      const { expanded_url } = links[current]
+      const { expanded_url, twitter_link } = links[current]
+
+      if (!expanded_url || twitter_link) {
+        setImmediate(() => getMetadata())
+        return
+      }
 
       spinner.text = `Getting metadata from ${expanded_url}`
 
@@ -87,6 +140,5 @@ export default ({ tweets, profile, checksum }) =>
 
       setImmediate(() => getMetadata())
     }
-
-    getMetadata()
+    findTwitterLinks()
   })

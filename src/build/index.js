@@ -8,6 +8,7 @@ import resolveUrls from './resolve-urls.js'
 import nunjucks from './nunjucks-environment.js'
 import copyMedia from './copy-media.js'
 import addTweetThreads from './tweet-threads.js'
+import addTweetSocialCards from './tweet-social-card.js'
 import crypto from 'crypto'
 import { DateTime } from 'luxon'
 
@@ -68,6 +69,7 @@ export default ({ source, templates, output, include, expandUrls }) =>
     let resolvedUrls = false
     if (expandUrls) {
       resolvedUrls = await resolveUrls({ tweets, profile, checksum })
+      addTweetSocialCards(tweets, resolvedUrls)
     }
 
     await copyMedia({ source, include, output })

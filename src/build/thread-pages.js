@@ -1,4 +1,5 @@
 import fs from 'fs/promises'
+import { DateTime } from 'luxon'
 import fsExist from 'fs.promises.exists'
 
 export default (njkEnvironment, { output, tweets }) =>
@@ -23,10 +24,8 @@ export default (njkEnvironment, { output, tweets }) =>
                     (childTweet) =>
                       tweet._threads.indexOf(childTweet.tweet.id) > -1,
                   )
-                  .sort((a, b) => {
-                    parseInt(a.tweet.id) > parseInt(b.tweet.id) ? -1 : 1
-                  })
-                  .map((childTweet) => childTweet.tweet),
+                  .map((childTweet) => childTweet.tweet)
+                  .reverse(),
               ],
             }),
           ),

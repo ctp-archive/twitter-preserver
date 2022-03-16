@@ -1,6 +1,7 @@
 <div class="tweet">
   <h2>
     <a href="#{{tweet.id}}" id="{{tweet.id}}">{{tweet.created_at | dateFromTweet}}</a>
+    <span>from {{tweet.source | safe}}</span>
   </h2>
   <blockquote>{{tweet.full_text | twitterBody(tweet) | safe }}</blockquote>
   {% if tweet.entities.media %}
@@ -9,6 +10,22 @@
         <img src="{{media.media_url | mediaUrl(tweet.id) }}" alt="" aria-hidden/>
       </div>
       {% endfor%}
+    {% endif %}
+    {% if tweet._social_card %}
+      <div class="social-card">
+        {% if tweet._social_card | socialCardValue("image") %}
+          <img src="{{ tweet._social_card | socialCardValue("image")}}" alt=""/>
+        {% endif %}
+        {% if tweet._social_card | socialCardValue("title") %}
+          <h3>{{ tweet._social_card | socialCardValue("title")}}</h3>
+        {% endif %}
+        {% if tweet._social_card | socialCardValue("description") %}
+          <p>{{ tweet._social_card | socialCardValue("description")}}</p>
+        {% endif %}
+        {% if tweet._social_card | socialCardValue("url") %}
+          <a href="{{ tweet._social_card | socialCardValue("url")}}">{{ tweet._social_card | socialCardValue("url")}}</a>
+        {% endif %}
+      </div>
     {% endif %}
     <ul class="meta" aria-label="{{tweet.favorite_count}} likes and {{tweet.retweet_count}} retweets">
       <li>Likes <span>{{tweet.favorite_count}}</span></li>

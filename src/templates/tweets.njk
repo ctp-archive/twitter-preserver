@@ -3,31 +3,6 @@
 {% block content %}
   <h1>{{account.username}} Tweets</h1>
   {%for tweet in tweets %}
-    <div class="tweet">
-      <h2>
-        <a href="#{{tweet.id}}" id="{{tweet.id}}">{{tweet.created_at | dateFromTweet}}</a>
-      </h2>
-      <blockquote>{{tweet.full_text | twitterBody(tweet) | safe }}</blockquote>
-      {% if tweet.entities.media %}
-        {%for media in tweet.entities.media %}
-          <div class="media">
-            <img src="{{media.media_url | mediaUrl(tweet.id) }}" alt="" aria-hidden/>
-          </div>
-          {% endfor%}
-        {% endif %}
-        <ul class="meta" aria-label="{{tweet.favorite_count}} likes and {{tweet.retweet_count}} retweets">
-          <li>Likes <span>{{tweet.favorite_count}}</span></li>
-          <li>Retweets <span>{{tweet.retweet_count}}</span></li>
-          {% if tweet._parent_thread %}
-            <li>
-              <span>
-                <a href="thread/{{tweet._parent_thread}}.html">Thread</span></a>
-            </li>
-          {% endif %}
-          <li class="twitter-link">
-            <a href="https://twitter.com/{{account.username}}/status/{{tweet.id_str}}">Open in Twitter</a>
-          </li>
-        </ul>
-      </div>
-    {% endfor %}
-  {% endblock %}
+    {% include "includes/tweet.njk" %}
+  {% endfor %}
+{% endblock %}
