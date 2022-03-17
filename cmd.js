@@ -27,7 +27,7 @@ const {
     name: 'include',
     alias: 'i',
     type: String,
-    defaultValue: 'tweets,dms,likes',
+    defaultValue: 'tweets,dms,group-dms,likes',
   },
   { name: 'help', type: Boolean, defaultValue: false },
   { name: 'expandUrls', type: Boolean, defaultValue: true },

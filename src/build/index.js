@@ -66,10 +66,6 @@ export default ({ source, templates, output, include, expandUrls }) =>
             .then((contents) => extractJson(contents.toString()))
         : false
 
-    const dms = await fs
-      .readFile(`${source}/data/direct-messages.js`)
-      .then((contents) => extractJson(contents.toString()))
-
     addTweetThreads(tweets, account.accountId)
 
     let resolvedUrls = false
@@ -104,7 +100,32 @@ export default ({ source, templates, output, include, expandUrls }) =>
         tweets,
       })
     }
-    if (include.indexOf('dms') > -1) {
+    if (include.indexOf('dms') > -1 || include.indexOf('group-dms') > -1) {
+      let dms = []
+
+      if (include.indexOf('dms') > -1) {
+        dms = [
+          ...dms,
+          ...(await fs
+            .readFile(`${source}/data/direct-messages.js`)
+            .then((contents) => extractJson(contents.toString()))),
+        ]
+      }
+
+      if (include.indexOf('group-dms') > -1) {
+        dms = [
+          ...dms,
+          ...(
+            await fs
+              .readFile(`${source}/data/direct-messages-group.js`)
+              .then((contents) => extractJson(contents.toString()))
+          ).map((message) => {
+            message.dmConversation._isGroup = true
+            return message
+          }),
+        ]
+      }
+
       await directMessagesPage(njkEnvironment, {
         output,
         templates,

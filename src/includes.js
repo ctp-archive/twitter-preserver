@@ -1,1 +1,1 @@
-export default ['tweets', 'dms', 'likes']
+export default ['tweets', 'dms', 'likes', 'group-dms']

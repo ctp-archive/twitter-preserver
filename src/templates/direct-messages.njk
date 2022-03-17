@@ -11,11 +11,14 @@
       <ul class="meta">
         <li>{{dm._messageCount}} message{%if dm._messageCount > 1%}s{% endif %}
         </li>
-        <li>
-          <a href="direct-messages/{{dm.id}}.html">View Direct Message</a>
-        </li>
-      </ul>
-    </article>
-    {{dm.conversationId}}
-  {% endfor %}
-{% endblock %}
+        {% if dm._isGroup %}
+          <li>Group message</li>
+          {% endif%}
+          <li>
+            <a href="direct-messages/{{dm.id}}.html">View Direct Message</a>
+          </li>
+        </ul>
+      </article>
+      {{dm.conversationId}}
+    {% endfor %}
+  {% endblock %}

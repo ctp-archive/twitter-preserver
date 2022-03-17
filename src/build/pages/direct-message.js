@@ -10,9 +10,11 @@ export default (njkEnvironment, { output, account, dms }) =>
     dms.forEach(async ({ dmConversation }) => {
       dmConversation.messages = dmConversation.messages
         .reverse()
+        .filter((message) => typeof message.messageCreate !== 'undefined')
         .map((conversation) => {
-          conversation.isAuthor =
-            conversation.messageCreate.senderId === account.accountId
+          conversation.isAuthor = conversation.messageCreate
+            ? conversation.messageCreate.senderId === account.accountId
+            : false
           return conversation
         })
       tasks.push(
