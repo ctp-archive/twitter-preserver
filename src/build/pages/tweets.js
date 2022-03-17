@@ -5,7 +5,7 @@ export default (njkEnvironment, { output, tweets }) =>
     await fs.writeFile(
       `${output}/tweets.html`,
       njkEnvironment.render('tweets.njk', {
-        pageTitle: `Tweets`,
+        pageTitle: 'Tweets',
         homePath: '../index.html',
         pathPrefix: '',
         showThreadLink: true,

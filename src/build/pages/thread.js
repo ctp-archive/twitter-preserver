@@ -19,7 +19,7 @@ export default (njkEnvironment, { output, tweets }) =>
           fs.writeFile(
             `${output}/thread/${tweet.id}.html`,
             njkEnvironment.render('thread.njk', {
-              pageTitle: `Thread`,
+              pageTitle: 'Thread',
               path: '',
               pathPrefix: '../',
               showThreadLink: false,
@@ -38,12 +38,11 @@ export default (njkEnvironment, { output, tweets }) =>
         )
       }
     })
-    await Promise.all(tasks).then(() => {
+    Promise.all(tasks).then(() => {
       spinner.stopAndPersist({
         symbol: chalk.green('✔️'),
         text: `Created ${tasks.length.toLocaleString()} Thread pages`,
       })
+      resolve()
     })
-
-    resolve()
   })

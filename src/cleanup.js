@@ -1,8 +1,8 @@
 import fs from 'fs'
 
-export default path =>
+export default (path) =>
   new Promise((resolve, reject) => {
     fs.rm(path, { recursive: true, force: true })
-    console.log(`Removed temporary directory`)
+    console.log('Removed temporary directory')
     resolve(path)
   })

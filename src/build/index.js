@@ -1,7 +1,7 @@
-import ora from 'ora'
 import fs from 'fs/promises'
 import fsExists from 'fs.promises.exists'
 import homePage from './pages/home.js'
+import downloadPage from './pages/download.js'
 import tweetsPage from './pages/tweets.js'
 import directMessagesPage from './pages/direct-messages.js'
 import threadPages from './pages/thread.js'
@@ -14,19 +14,21 @@ import likesPage from './pages/likes.js'
 import crypto from 'crypto'
 
 const extractJson = (contents) =>
-  JSON.parse(contents.replace(/window.[(A-Za-z0-9\.\_]* = /, ''))
+  JSON.parse(contents.replace(/window.[(A-Za-z0-9\.\_]* = /, '')) // eslint-disable-line
 
 export default ({ source, templates, output, include, expandUrls }) =>
   new Promise(async (resolve, reject) => {
     if (!(await fsExists(`${source}/Your archive.html`))) {
       reject(
-        `The provided input directory or ZIP file is not a Twitter archive.`,
+        new Error(
+          'The provided input directory or ZIP file is not a Twitter archive.',
+        ),
       )
       return
     }
 
     if (!(await fsExists(`${templates}/style.css`))) {
-      reject(`The template directory is missing a stylesheet`)
+      reject(new Error('The template directory is missing a stylesheet'))
       return
     }
 
@@ -59,6 +61,29 @@ export default ({ source, templates, output, include, expandUrls }) =>
       .readFile(`${source}/data/tweet.js`)
       .then((contents) => extractJson(contents.toString()))
 
+    const directMessages = await fs
+      .readFile(`${source}/data/direct-messages.js`)
+      .then((contents) => extractJson(contents.toString()))
+
+    const groupDirectMessages = await fs
+      .readFile(`${source}/data/direct-messages-group.js`)
+      .then((contents) =>
+        extractJson(contents.toString()).map((message) => {
+          message.dmConversation._isGroup = true
+          return message
+        }),
+      )
+
+    let dms = []
+
+    if (include.indexOf('dms') > -1) {
+      dms = [...dms, ...directMessages]
+    }
+
+    if (include.indexOf('group-dms') > -1) {
+      dms = [...dms, ...groupDirectMessages]
+    }
+
     const likes =
       include.indexOf('likes') > -1
         ? await fs
@@ -70,7 +95,13 @@ export default ({ source, templates, output, include, expandUrls }) =>
 
     let resolvedUrls = false
     if (expandUrls) {
-      resolvedUrls = await resolveUrls({ tweets, profile, likes, checksum })
+      resolvedUrls = await resolveUrls({
+        tweets,
+        profile,
+        likes,
+        dms,
+        checksum,
+      })
     }
 
     await copyMedia({ source, include, output })
@@ -90,6 +121,15 @@ export default ({ source, templates, output, include, expandUrls }) =>
     }
     await homePage(njkEnvironment, { output, verified })
 
+    await downloadPage(njkEnvironment, {
+      output,
+      include,
+      account,
+      tweets,
+      dms,
+      likes,
+    })
+
     if (include.indexOf('tweets') > -1) {
       await tweetsPage(njkEnvironment, {
         output,
@@ -101,31 +141,6 @@ export default ({ source, templates, output, include, expandUrls }) =>
       })
     }
     if (include.indexOf('dms') > -1 || include.indexOf('group-dms') > -1) {
-      let dms = []
-
-      if (include.indexOf('dms') > -1) {
-        dms = [
-          ...dms,
-          ...(await fs
-            .readFile(`${source}/data/direct-messages.js`)
-            .then((contents) => extractJson(contents.toString()))),
-        ]
-      }
-
-      if (include.indexOf('group-dms') > -1) {
-        dms = [
-          ...dms,
-          ...(
-            await fs
-              .readFile(`${source}/data/direct-messages-group.js`)
-              .then((contents) => extractJson(contents.toString()))
-          ).map((message) => {
-            message.dmConversation._isGroup = true
-            return message
-          }),
-        ]
-      }
-
       await directMessagesPage(njkEnvironment, {
         output,
         templates,

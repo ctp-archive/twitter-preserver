@@ -14,7 +14,7 @@
     {%for message in dm.messages %}
       <li {% if message.isAuthor %}class="is-author"{% endif %}>
         <div class="message">
-          {{ message.messageCreate.text | autoLink | safe }}
+          {{ message.messageCreate.text | resolveLinks | safe }}
           {%for media in message.messageCreate.mediaUrls %}
             <span class="media">
               {{media | dmMedia(message.messageCreate.id, dm._isGroup) | safe }}

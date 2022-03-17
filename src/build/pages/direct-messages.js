@@ -5,7 +5,7 @@ export default (njkEnvironment, { output, dms }) =>
     await fs.writeFile(
       `${output}/direct-messages.html`,
       njkEnvironment.render('direct-messages.njk', {
-        pageTitle: `Direct messages`,
+        pageTitle: 'Direct messages',
         homePath: '../index.html',
         pathPrefix: '',
         path: '',

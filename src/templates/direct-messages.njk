@@ -7,7 +7,7 @@
       <h2>
         <a href="#{{dm.id}}" id="{{dm.id}}">{{dm.createdAt | dateFromISO }}</a>
       </h2>
-      <p>{{dm.text | limitLength(300) | autoLink | safe}}</p>
+      <p>{{dm.text |  resolveLinks | limitLength(300)  | safe}}</p>
       <ul class="meta">
         <li>{{dm._messageCount}} message{%if dm._messageCount > 1%}s{% endif %}
         </li>

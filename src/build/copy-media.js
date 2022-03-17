@@ -1,16 +1,10 @@
 import copy from 'recursive-copy'
-import fsExists from 'fs.promises.exists'
+import fs from 'fs'
 import ora from 'ora'
 import chalk from 'chalk'
 
-const sources = {
-  profile: 'profile_media',
-  tweets: ['community_tweet_media', 'tweet_media'],
-  dms: ['direct_messages_media', 'direct_messages_group_media'],
-}
-
 export default ({ source, include, output }) =>
-  new Promise(async (resolve, reject) => {
+  new Promise((resolve, reject) => {
     const spinner = ora({
       spinner: 'boxBounce',
       text: 'Copying media',
@@ -29,16 +23,17 @@ export default ({ source, include, output }) =>
     }
 
     directories.forEach(async (directory) => {
-      if (!(await fsExists(`${output}/media/${directory}`))) {
+      if (!fs.existsSync(`${output}/media/${directory}`)) {
         tasks.push(
           copy(`${source}/data/${directory}`, `${output}/media/${directory}`),
         )
       }
     })
-    await Promise.all(tasks)
-    spinner.stopAndPersist({
-      symbol: chalk.green('✔️'),
-      text: `Copied ${directories.length} directories of media`,
+    Promise.all(tasks).then(() => {
+      spinner.stopAndPersist({
+        symbol: chalk.green('✔️'),
+        text: `Copied ${directories.length} directories of media`,
+      })
+      resolve()
     })
-    resolve()
   })

@@ -5,11 +5,9 @@ import autolinker from 'autolinker'
 import ellipsize from 'ellipsize'
 import isImage from 'is-image'
 import allowedIncludes from '../includes.js'
+import twitterRegex from './twitter-regex.js'
 
 const dateFormat = DateTime.DATETIME_FULL
-
-const twitterUrlRegex =
-  /http(s?):\/\/t.co\/([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g
 
 export default ({
   templates,
@@ -90,7 +88,7 @@ export default ({
     if (!resolvedUrls) {
       return result
     }
-    const matches = str.match(twitterUrlRegex)
+    const matches = str.match(twitterRegex)
     if (matches) {
       matches.forEach((match) => {
         const matchSearch = new RegExp(match, 'g')
@@ -116,7 +114,7 @@ export default ({
     if (!resolvedUrls) {
       return result
     }
-    const matches = str.match(twitterUrlRegex)
+    const matches = str.match(twitterRegex)
     if (matches) {
       matches.forEach((match) => {
         const matchSearch = new RegExp(match, 'g')

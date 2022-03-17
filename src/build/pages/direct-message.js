@@ -28,7 +28,7 @@ export default (njkEnvironment, { output, account, dms }) =>
         fs.writeFile(
           `${output}/direct-messages/${dmConversation.conversationId}.html`,
           njkEnvironment.render('direct-message.njk', {
-            pageTitle: `Direct message`,
+            pageTitle: 'Direct message',
             path: '',
             pathPrefix: '../',
             dm: dmConversation,
@@ -36,12 +36,11 @@ export default (njkEnvironment, { output, account, dms }) =>
         ),
       )
     })
-    await Promise.all(tasks).then(() => {
+    Promise.all(tasks).then(() => {
       spinner.stopAndPersist({
         symbol: chalk.green('✔️'),
         text: `Created ${tasks.length.toLocaleString()} Direct Message pages`,
       })
+      resolve()
     })
-
-    resolve()
   })

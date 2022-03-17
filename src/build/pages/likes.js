@@ -5,7 +5,7 @@ export default (njkEnvironment, { output, likes }) =>
     await fs.writeFile(
       `${output}/likes.html`,
       njkEnvironment.render('likes.njk', {
-        pageTitle: `Likes`,
+        pageTitle: 'Likes',
         homePath: '../index.html',
         pathPrefix: '',
         path: '',

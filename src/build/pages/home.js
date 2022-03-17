@@ -5,7 +5,7 @@ export default (njkEnvironment, { output, verified }) =>
     await fs.writeFile(
       `${output}/index.html`,
       njkEnvironment.render('index.njk', {
-        pageTitle: `Twitter archive`,
+        pageTitle: 'Twitter archive',
         path: '',
         verified,
       }),

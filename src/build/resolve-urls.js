@@ -3,10 +3,9 @@ import ora from 'ora'
 import chalk from 'chalk'
 import fsExists from 'fs.promises.exists'
 import fetch from 'node-fetch'
+import twitterRegex from './twitter-regex.js'
 
-const regex = /http(s?):\/\/t.co\/([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g
-
-export default ({ tweets, profile, likes, checksum }) =>
+export default ({ tweets, profile, likes, dms, checksum }) =>
   new Promise(async (resolve, reject) => {
     const spinner = ora({
       spinner: 'boxBounce',
@@ -30,7 +29,22 @@ export default ({ tweets, profile, likes, checksum }) =>
 
     const links = tweets.flatMap(({ tweet }) => tweet.entities.urls)
 
-    if (profile.description.website.search(regex) > -1) {
+    dms.forEach(({ dmConversation }) => {
+      dmConversation.messages.forEach((message) => {
+        if (typeof message.messageCreate === 'undefined') {
+          return
+        }
+        message.messageCreate.urls.forEach((url) => {
+          links.push({
+            url: url.url,
+            expanded_url: url.expanded_url,
+            display_url: url.display,
+          })
+        })
+      })
+    })
+
+    if (profile.description.website.search(twitterRegex) > -1) {
       spinner.text = `Resolving profile website ${profile.description.website}`
       await fetch(profile.description.website, {
         method: 'HEAD',
@@ -45,7 +59,11 @@ export default ({ tweets, profile, likes, checksum }) =>
             display_url: location.replace(/http(s?):\/\//g, ''),
           })
         })
-        .catch((error) => {})
+        .catch(() => {
+          console.log(
+            `Could not find URL for profile website ${profile.description.website}`,
+          )
+        })
     }
 
     /**
@@ -53,7 +71,7 @@ export default ({ tweets, profile, likes, checksum }) =>
      */
     if (likes) {
       likes.forEach(({ like }) => {
-        const matches = like.fullText.match(regex)
+        const matches = like.fullText.match(twitterRegex)
         if (matches) {
           matches.forEach((match) => {
             if (
@@ -72,7 +90,7 @@ export default ({ tweets, profile, likes, checksum }) =>
     }
 
     tweets.forEach(({ tweet }) => {
-      const matches = tweet.full_text.match(regex)
+      const matches = tweet.full_text.match(twitterRegex)
       if (matches) {
         matches.forEach((match) => {
           if (typeof links.find((link) => link.url === match) === 'undefined') {
@@ -121,7 +139,7 @@ export default ({ tweets, profile, likes, checksum }) =>
           links[current].expanded_url = location
           links[current].display_url = location.replace(/http(s?):\/\//g, '')
         })
-        .catch((error) => {})
+        .catch(() => {})
       setImmediate(() => findTwitterLinks())
     }
 

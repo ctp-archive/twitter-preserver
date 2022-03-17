@@ -22,6 +22,7 @@
     "extract-zip": "^2.0.1",
     "fs.promises.exists": "^1.1.2",
     "is-image": "^3.0.0",
+    "json2csv": "^5.0.7",
     "luxon": "^2.3.0",
     "node-fetch": "^3.2.3",
     "nunjucks": "^3.2.3",
@@ -29,9 +30,16 @@
     "recursive-copy": "^2.0.13"
   },
   "scripts": {
-    "build": "sass --no-source-map src/sass:src/templates"
+    "build": "sass --no-source-map src/sass:src/templates",
+    "lint": "eslint ./src"
   },
   "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
     "prettier": "^2.5.1",
     "sass": "^1.49.7"
   }
