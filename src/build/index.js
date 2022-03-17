@@ -1,15 +1,15 @@
 import ora from 'ora'
 import fs from 'fs/promises'
 import fsExists from 'fs.promises.exists'
-import indexPage from './index-page.js'
-import tweetsPage from './tweets.js'
-import dmsPage from './dms.js'
-import threadPages from './thread-pages.js'
+import homePage from './pages/home.js'
+import tweetsPage from './pages/tweets.js'
+import directMessagesPage from './pages/direct-messages.js'
+import threadPages from './pages/thread.js'
 import resolveUrls from './resolve-urls.js'
 import nunjucks from './nunjucks-environment.js'
 import copyMedia from './copy-media.js'
 import addTweetThreads from './tweet-threads.js'
-import likesPage from './likes-page.js'
+import likesPage from './pages/likes.js'
 import crypto from 'crypto'
 
 const extractJson = (contents) =>
@@ -91,7 +91,7 @@ export default ({ source, templates, output, include, expandUrls }) =>
     if (!(await fsExists(output))) {
       await fs.mkdir(output)
     }
-    await indexPage(njkEnvironment, { output, verified })
+    await homePage(njkEnvironment, { output, verified })
 
     if (include.indexOf('tweets') > -1) {
       await tweetsPage(njkEnvironment, {
@@ -104,7 +104,7 @@ export default ({ source, templates, output, include, expandUrls }) =>
       })
     }
     if (include.indexOf('dms') > -1) {
-      await dmsPage(njkEnvironment, {
+      await directMessagesPage(njkEnvironment, {
         output,
         templates,
         dms,
