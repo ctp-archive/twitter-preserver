@@ -1,6 +1,6 @@
 {
   "name": "twitter-preserver",
-  "version": "0.1",
+  "version": "0.2.0",
   "description": "Converts twitter exports to flat documents.",
   "main": "index.js",
   "license": "Apache-2.0",
@@ -31,8 +31,9 @@
   },
   "scripts": {
     "build": "sass --no-source-map src/sass:src/templates",
-    "lint": "eslint ./src",
-    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
+    "test:lint": "eslint ./src",
+    "test:jest": "yarn node --experimental-vm-modules $(yarn bin jest)",
+    "test": "run-p test:lint test:jest"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
@@ -42,6 +43,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
     "jest": "^27.5.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
     "sass": "^1.49.7"
   }
