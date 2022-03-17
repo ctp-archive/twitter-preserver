@@ -1,6 +1,8 @@
 import nunjucks from 'nunjucks'
 import { DateTime } from 'luxon'
 import path from 'path'
+import autolinker from 'autolinker'
+import ellipsize from 'ellipsize'
 import allowedIncludes from '../includes.js'
 
 const dateFormat = DateTime.DATETIME_FULL
@@ -67,6 +69,8 @@ export default ({
     return str
   })
 
+  env.addFilter('limitLength', (str, length) => ellipsize(str, length))
+
   env.addFilter('resolveLinks', (str) => {
     let result = str
     if (!resolvedUrls) {
@@ -88,6 +92,10 @@ export default ({
 
     return result
   })
+
+  env.addFilter('autoLink', (str) => autolinker.link(str))
+
+  env.addFilter('limitString', (str) => {})
 
   env.addFilter('twitterBody', (str, tweet, tweetLinkPrefix) => {
     let result = str

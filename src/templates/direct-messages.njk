@@ -7,10 +7,14 @@
       <h2>
         <a href="#{{dm.id}}" id="{{dm.id}}">{{dm.createdAt | dateFromISO }}</a>
       </h2>
-      <p>{{dm.text}}</p>
-      <div class="meta">
-        <a href="direct-messages/{{dm.id}}.html">View Direct Message</a>
-      </div>
+      <p>{{dm.text | limitLength(300) | autoLink | safe}}</p>
+      <ul class="meta">
+        <li>{{dm._messageCount}} message{%if dm._messageCount > 1%}s{% endif %}
+        </li>
+        <li>
+          <a href="direct-messages/{{dm.id}}.html">View Direct Message</a>
+        </li>
+      </ul>
     </article>
     {{dm.conversationId}}
   {% endfor %}

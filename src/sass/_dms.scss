@@ -44,6 +44,9 @@
       border-radius: 20px 20px 0 20px;
       color: $dm-author-text;
       background: $dm-author-background;
+      a {
+        color: $dm-author-text;
+      }
     }
   }
   .author {

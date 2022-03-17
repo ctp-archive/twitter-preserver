@@ -9,7 +9,7 @@
     {%for message in dm.messages %}
       <li {% if message.isAuthor %}class="is-author"{% endif %}>
         <p>
-          {{ message.messageCreate.text }}
+          {{ message.messageCreate.text | autoLink | safe }}
         </p>
         <div class="author">
           {% if message.isAuthor %}

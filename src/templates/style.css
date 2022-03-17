@@ -167,6 +167,9 @@ h1.user-title img {
   color: white;
   background: #3e547e;
 }
+.dm-thread .is-author p a {
+  color: white;
+}
 .dm-thread .author {
   color: grey;
   font-size: 0.9rem;

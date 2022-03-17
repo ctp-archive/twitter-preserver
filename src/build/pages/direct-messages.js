@@ -9,11 +9,14 @@ export default (njkEnvironment, { output, dms }) =>
         homePath: '../index.html',
         pathPrefix: '',
         path: '',
-        dms: dms.map((dm) => ({
-          ...dm.dmConversation.messages[dm.dmConversation.messages.length - 1]
-            .messageCreate,
-          id: dm.dmConversation.conversationId,
-        })),
+        dms: dms
+          .map((dm) => ({
+            ...dm.dmConversation.messages[dm.dmConversation.messages.length - 1]
+              .messageCreate,
+            _messageCount: dm.dmConversation.messages.length,
+            id: dm.dmConversation.conversationId,
+          }))
+          .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)),
       }),
     )
     resolve()
