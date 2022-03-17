@@ -1,0 +1,24 @@
+{% extends "includes/base.njk" %}
+
+{% block content %}
+  <h1>{{account.username}} Direct Message</h1>
+  <p>
+    <strong>Conversation ID:</strong>
+    {{dm.conversationId}}</p>
+  <ul class="dm-thread">
+    {%for message in dm.messages %}
+      <li {% if message.isAuthor %}class="is-author"{% endif %}>
+        <p>
+          {{ message.messageCreate.text }}
+        </p>
+        <div class="author">
+          {% if message.isAuthor %}
+            {{account.username}}
+          {% else %}
+            {{message.messageCreate.senderId}}
+          {% endif %} at {{message.messageCreate.createdAt | dateFromISO }}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

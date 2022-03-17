@@ -5,6 +5,7 @@ import homePage from './pages/home.js'
 import tweetsPage from './pages/tweets.js'
 import directMessagesPage from './pages/direct-messages.js'
 import threadPages from './pages/thread.js'
+import directMessagePages from './pages/direct-message.js'
 import resolveUrls from './resolve-urls.js'
 import nunjucks from './nunjucks-environment.js'
 import copyMedia from './copy-media.js'
@@ -107,6 +108,12 @@ export default ({ source, templates, output, include, expandUrls }) =>
       await directMessagesPage(njkEnvironment, {
         output,
         templates,
+        dms,
+      })
+      await directMessagePages(njkEnvironment, {
+        output,
+        templates,
+        account,
         dms,
       })
     }

@@ -1,0 +1,17 @@
+{% extends "includes/base.njk" %}
+
+{% block content %}
+  <h1>{{account.username}} Direct Messages</h1>
+  {%for dm in dms %}
+    <article role="article" class="tweet">
+      <h2>
+        <a href="#{{dm.id}}" id="{{dm.id}}">{{dm.createdAt | dateFromISO }}</a>
+      </h2>
+      <p>{{dm.text}}</p>
+      <div class="meta">
+        <a href="direct-messages/{{dm.id}}.html">View Direct Message</a>
+      </div>
+    </article>
+    {{dm.conversationId}}
+  {% endfor %}
+{% endblock %}

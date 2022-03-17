@@ -13,7 +13,7 @@ export default (njkEnvironment, { output, tweets }) =>
         tasks.push(
           fs.writeFile(
             `${output}/thread/${tweet.id}.html`,
-            njkEnvironment.render('tweets.njk', {
+            njkEnvironment.render('thread.njk', {
               pageTitle: `Thread`,
               path: '',
               pathPrefix: '../',

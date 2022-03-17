@@ -4,8 +4,11 @@ $border-color: grey;
 $light-text-color: grey;
 $text-color: black;
 $body-background-color: white;
+$dm-author-background: #3e547e;
+$dm-author-text: white;
 
 @import 'header';
 @import 'container';
 @import 'typography';
 @import 'tweet';
+@import 'dms';
