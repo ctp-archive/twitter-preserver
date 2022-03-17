@@ -3,6 +3,7 @@ import { DateTime } from 'luxon'
 import path from 'path'
 import autolinker from 'autolinker'
 import ellipsize from 'ellipsize'
+import isImage from 'is-image'
 import allowedIncludes from '../includes.js'
 
 const dateFormat = DateTime.DATETIME_FULL
@@ -67,6 +68,19 @@ export default ({
       }
     }
     return str
+  })
+
+  env.addFilter('dmMedia', (url, id, group) => {
+    const filename = url.split('/').pop()
+    const directory = group
+      ? 'direct_messages_group_media'
+      : 'direct_messages_media'
+    if (isImage(filename)) {
+      return `<img src="../media/${directory}/${id}-${filename}" alt=""/>`
+    }
+    if (url.search('dm_video') > -1) {
+      return `<video controls src="../media/${directory}/${id}-${filename}"/>`
+    }
   })
 
   env.addFilter('limitLength', (str, length) => ellipsize(str, length))

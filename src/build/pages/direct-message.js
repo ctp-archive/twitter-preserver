@@ -1,9 +1,16 @@
 import fs from 'fs/promises'
 import fsExist from 'fs.promises.exists'
+import ora from 'ora'
+import chalk from 'chalk'
 
 export default (njkEnvironment, { output, account, dms }) =>
   new Promise(async (resolve, reject) => {
     const tasks = []
+    const spinner = ora({
+      spinner: 'boxBounce',
+      text: 'Creating Direct Messages pages',
+    }).start()
+
     if (!(await fsExist(`${output}/direct-messages`))) {
       await fs.mkdir(`${output}/direct-messages`)
     }
@@ -29,7 +36,12 @@ export default (njkEnvironment, { output, account, dms }) =>
         ),
       )
     })
-    await Promise.all(tasks)
+    await Promise.all(tasks).then(() => {
+      spinner.stopAndPersist({
+        symbol: chalk.green('✔️'),
+        text: `Created ${tasks.length.toLocaleString()} Direct Message pages`,
+      })
+    })
 
     resolve()
   })

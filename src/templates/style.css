@@ -146,13 +146,20 @@ h1.user-title img {
   display: flex;
   flex-wrap: wrap;
 }
-.dm-thread p {
+.dm-thread .message {
   border: 1px solid grey;
   border-radius: 20px 20px 20px 0;
   padding: 1rem;
   display: inline-block;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+}
+.dm-thread .message .media {
+  margin: 1rem 0;
+}
+.dm-thread .message .media img,
+.dm-thread .message .media video {
+  width: 100%;
 }
 .dm-thread .is-author {
   align-items: flex-end;

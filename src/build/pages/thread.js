@@ -1,10 +1,15 @@
 import fs from 'fs/promises'
-import { DateTime } from 'luxon'
+import ora from 'ora'
+import chalk from 'chalk'
 import fsExist from 'fs.promises.exists'
 
 export default (njkEnvironment, { output, tweets }) =>
   new Promise(async (resolve, reject) => {
     const tasks = []
+    const spinner = ora({
+      spinner: 'boxBounce',
+      text: 'Creating Thread pages',
+    }).start()
     if (!(await fsExist(`${output}/thread`))) {
       await fs.mkdir(`${output}/thread`)
     }
@@ -33,7 +38,12 @@ export default (njkEnvironment, { output, tweets }) =>
         )
       }
     })
-    await Promise.all(tasks)
+    await Promise.all(tasks).then(() => {
+      spinner.stopAndPersist({
+        symbol: chalk.green('✔️'),
+        text: `Created ${tasks.length.toLocaleString()} Thread pages`,
+      })
+    })
 
     resolve()
   })

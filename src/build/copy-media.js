@@ -1,6 +1,7 @@
 import copy from 'recursive-copy'
 import fsExists from 'fs.promises.exists'
 import ora from 'ora'
+import chalk from 'chalk'
 
 const sources = {
   profile: 'profile_media',
@@ -22,8 +23,11 @@ export default ({ source, include, output }) =>
     }
     if (include.indexOf('dms') !== -1) {
       directories.push('direct_messages_media')
+    }
+    if (include.indexOf('group-dms') !== -1) {
       directories.push('direct_messages_group_media')
     }
+
     directories.forEach(async (directory) => {
       if (!(await fsExists(`${output}/media/${directory}`))) {
         tasks.push(
@@ -32,6 +36,9 @@ export default ({ source, include, output }) =>
       }
     })
     await Promise.all(tasks)
-    spinner.stop()
+    spinner.stopAndPersist({
+      symbol: chalk.green('✔️'),
+      text: `Copied ${directories.length} directories of media`,
+    })
     resolve()
   })

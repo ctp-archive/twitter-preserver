@@ -21,6 +21,7 @@
     "ellipsize": "^0.5.1",
     "extract-zip": "^2.0.1",
     "fs.promises.exists": "^1.1.2",
+    "is-image": "^3.0.0",
     "luxon": "^2.3.0",
     "node-fetch": "^3.2.3",
     "nunjucks": "^3.2.3",
