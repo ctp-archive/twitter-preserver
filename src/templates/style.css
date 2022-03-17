@@ -43,6 +43,12 @@ body a:visited {
   color: #4141cf;
 }
 
+a[target=_blank]::after {
+  content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+  margin-left: 0.5rem;
+  display: inline-block;
+}
+
 h1.user-title {
   display: flex;
   align-items: center;
@@ -82,7 +88,7 @@ h1.user-title img {
   font-size: 0.8rem;
   font-weight: normal;
 }
-.tweet blockquote {
+.tweet p {
   padding: 1rem;
   margin: 0;
 }

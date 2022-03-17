@@ -8,6 +8,7 @@ export default (njkEnvironment, { output, tweets }) =>
         pageTitle: `Tweets`,
         homePath: '../index.html',
         pathPrefix: '',
+        showThreadLink: true,
         path: '',
         tweets: tweets.map((tweet) => tweet.tweet),
       }),

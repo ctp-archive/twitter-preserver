@@ -17,6 +17,7 @@ export default (njkEnvironment, { output, tweets }) =>
               pageTitle: `Thread`,
               path: '',
               pathPrefix: '../',
+              showThreadLink: false,
               tweets: [
                 tweet,
                 ...tweets

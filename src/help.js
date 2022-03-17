@@ -21,7 +21,7 @@ Arguments:
 --output=./public
   Write the results of the archive to this folder (default ./public)
 
---include=tweets,dms
+--include=tweets,dms,likes
   Comma-separated list of what data to include in the export.
   Possible values are: ${includes.join(', ')}
 

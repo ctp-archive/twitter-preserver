@@ -23,7 +23,12 @@ const {
   { name: 'output', alias: 'o', type: String, defaultValue: './public' },
   { name: 'expanded', alias: 'e', type: Boolean, defaultValue: false },
   { name: 'dev', alias: 'd', type: Boolean, defaultValue: false },
-  { name: 'include', alias: 'i', type: String, defaultValue: 'tweets,dms' },
+  {
+    name: 'include',
+    alias: 'i',
+    type: String,
+    defaultValue: 'tweets,dms,likes',
+  },
   { name: 'help', type: Boolean, defaultValue: false },
   { name: 'expandUrls', type: Boolean, defaultValue: true },
   { name: 'clean', type: Boolean, defaultValue: false },

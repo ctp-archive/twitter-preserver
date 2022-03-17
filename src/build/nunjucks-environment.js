@@ -67,47 +67,70 @@ export default ({
     return str
   })
 
+  env.addFilter('resolveLinks', (str) => {
+    let result = str
+    if (!resolvedUrls) {
+      return result
+    }
+    const matches = str.match(twitterUrlRegex)
+    if (matches) {
+      matches.forEach((match) => {
+        const matchSearch = new RegExp(match, 'g')
+        const target = resolvedUrls.find(({ url }) => url === match)
+        if (target) {
+          result = result.replace(
+            matchSearch,
+            `<a href="${target.expanded_url}">${target.display_url}</a>`,
+          )
+        }
+      })
+    }
+
+    return result
+  })
+
   env.addFilter('twitterBody', (str, tweet, tweetLinkPrefix) => {
     let result = str
-    if (resolvedUrls) {
-      const matches = str.match(twitterUrlRegex)
-      if (matches) {
-        matches.forEach((match) => {
-          const matchSearch = new RegExp(match, 'g')
-          const target = resolvedUrls.find(({ url }) => url === match)
-          if (target) {
-            /*
-             *  Remove URLs that point to the current Tweet's media files.
-             */
+    if (!resolvedUrls) {
+      return result
+    }
+    const matches = str.match(twitterUrlRegex)
+    if (matches) {
+      matches.forEach((match) => {
+        const matchSearch = new RegExp(match, 'g')
+        const target = resolvedUrls.find(({ url }) => url === match)
+        if (target) {
+          /*
+           *  Remove URLs that point to the current Tweet's media files.
+           */
+          if (
+            typeof tweet.entities.media !== 'undefined' &&
+            tweet.entities.media.filter(
+              (media) => media.expanded_url === target.expanded_url,
+            ).length
+          ) {
+            result = result.replace(matchSearch, '')
+          } else {
             if (
-              typeof tweet.entities.media !== 'undefined' &&
-              tweet.entities.media.filter(
-                (media) => media.expanded_url === target.expanded_url,
-              ).length
+              target.expanded_url.search(
+                `twitter.com/${account.username}/status/`,
+              ) > -1
             ) {
-              result = result.replace(matchSearch, '')
+              const urlPath = path.parse(target.expanded_url)
+              const name = urlPath.name.replace(/\?(.*)/g, '')
+              result = result.replace(
+                matchSearch,
+                `<a href="${tweetLinkPrefix}tweets.html#${name}">[Tweet ${name}]</a>`,
+              )
             } else {
-              if (
-                target.expanded_url.search(
-                  `twitter.com/${account.username}/status/`,
-                ) > -1
-              ) {
-                const urlPath = path.parse(target.expanded_url)
-                const name = urlPath.name.replace(/\?(.*)/g, '')
-                result = result.replace(
-                  matchSearch,
-                  `<a href="${tweetLinkPrefix}tweets.html#${name}">[Tweet ${name}]</a>`,
-                )
-              } else {
-                result = result.replace(
-                  matchSearch,
-                  `<a href="${target.expanded_url}">${target.display_url}</a>`,
-                )
-              }
+              result = result.replace(
+                matchSearch,
+                `<a href="${target.expanded_url}">${target.display_url}</a>`,
+              )
             }
           }
-        })
-      }
+        }
+      })
     }
 
     return result

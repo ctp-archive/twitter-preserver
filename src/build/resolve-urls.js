@@ -6,7 +6,7 @@ import fetch from 'node-fetch'
 
 const regex = /http(s?):\/\/t.co\/([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/g
 
-export default ({ tweets, profile, checksum }) =>
+export default ({ tweets, profile, likes, checksum }) =>
   new Promise(async (resolve, reject) => {
     const spinner = ora({
       spinner: 'boxBounce',
@@ -46,6 +46,29 @@ export default ({ tweets, profile, checksum }) =>
           })
         })
         .catch((error) => {})
+    }
+
+    /**
+     * Fetch t.co links from Likes text
+     */
+    if (likes) {
+      likes.forEach(({ like }) => {
+        const matches = like.fullText.match(regex)
+        if (matches) {
+          matches.forEach((match) => {
+            if (
+              typeof links.find((link) => link.url === match) === 'undefined'
+            ) {
+              links.push({
+                url: match,
+                twitter_link: true,
+                expanded_url: false,
+                display_url: false,
+              })
+            }
+          })
+        }
+      })
     }
 
     tweets.forEach(({ tweet }) => {

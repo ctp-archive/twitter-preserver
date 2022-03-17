@@ -9,8 +9,8 @@ import resolveUrls from './resolve-urls.js'
 import nunjucks from './nunjucks-environment.js'
 import copyMedia from './copy-media.js'
 import addTweetThreads from './tweet-threads.js'
+import likesPage from './likes-page.js'
 import crypto from 'crypto'
-import { DateTime } from 'luxon'
 
 const extractJson = (contents) =>
   JSON.parse(contents.replace(/window.[(A-Za-z0-9\.\_]* = /, ''))
@@ -58,6 +58,13 @@ export default ({ source, templates, output, include, expandUrls }) =>
       .readFile(`${source}/data/tweet.js`)
       .then((contents) => extractJson(contents.toString()))
 
+    const likes =
+      include.indexOf('likes') > -1
+        ? await fs
+            .readFile(`${source}/data/like.js`)
+            .then((contents) => extractJson(contents.toString()))
+        : false
+
     const dms = await fs
       .readFile(`${source}/data/direct-messages.js`)
       .then((contents) => extractJson(contents.toString()))
@@ -66,7 +73,7 @@ export default ({ source, templates, output, include, expandUrls }) =>
 
     let resolvedUrls = false
     if (expandUrls) {
-      resolvedUrls = await resolveUrls({ tweets, profile, checksum })
+      resolvedUrls = await resolveUrls({ tweets, profile, likes, checksum })
     }
 
     await copyMedia({ source, include, output })
@@ -101,6 +108,13 @@ export default ({ source, templates, output, include, expandUrls }) =>
         output,
         templates,
         dms,
+      })
+    }
+    if (likes) {
+      await likesPage(njkEnvironment, {
+        output,
+        templates,
+        likes,
       })
     }
 
