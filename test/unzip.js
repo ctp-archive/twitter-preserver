@@ -1,10 +1,14 @@
-//import assert from 'assert'
+import assert from 'assert'
+import fsExists from 'fs.promises.exists'
 import unzip from '../src/unzip.js'
 
 describe('Unzip', () => {
-  this.timeout(0)
-  it('unzips directory', () =>
-    unzip('./test/sample.zip').then((result) => {
-      console.log(path)
-    }))
+  it('unzips directory', (done) => {
+    unzip('./test/sample.zip')
+      .then((path) => fsExists(`${path}/Your archive.html`))
+      .then((exists) => {
+        assert.ok(exists)
+        done()
+      })
+  }).timeout(0)
 })
