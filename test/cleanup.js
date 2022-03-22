@@ -1,17 +1,17 @@
 import assert from 'assert'
 import fs from 'fs/promises'
 import fsExists from 'fs.promises.exists'
-import cleanCache from '../src/clean-cache.js'
+import cleanup from '../src/cleanup.js'
 
-describe('Clean cache', () => {
-  const dir = '/tmp/twitter-archive-test-cache'
-  it('removes cache directories', () =>
+describe('Cleanup', () => {
+  const dir = '/tmp/twitter-archive-test'
+  it('removes temporary directory', () =>
     fs
       .mkdir(dir, { recursive: true })
       .then(() => fsExists(dir))
       .then((exists) => {
         assert.ok(exists)
-        return cleanCache(dir)
+        return cleanup(dir)
       })
       .then(() => fsExists(dir))
       .then((exists) => {
