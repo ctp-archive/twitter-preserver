@@ -32,7 +32,7 @@ const loadCachedLinks = (checksum) =>
         }
         return fs.readFile(`./.cache/links-${checksum}.json`)
       })
-      .then((result) => JSON.parse(result.toString()))
+      .then((result) => resolve(JSON.parse(result.toString())))
       .catch((error) => reject(error))
   })
 
@@ -120,7 +120,7 @@ export default ({ tweets, profile, likes, dms, checksum }) =>
     }).start()
 
     checkCacheDirectory()
-      .then(loadCachedLinks(checksum))
+      .then(() => loadCachedLinks(checksum))
       .then((cachedLinks) => {
         if (cachedLinks) {
           spinner.stopAndPersist({
@@ -128,7 +128,7 @@ export default ({ tweets, profile, likes, dms, checksum }) =>
             text: `Loaded ${cachedLinks.length.toLocaleString()} links from cache`,
           })
           resolve(cachedLinks)
-          return
+          return false
         }
         const links = parseExistingLinks({ tweets, dms, likes })
         if (profile.description.website.search(twitterRegex) > -1) {
@@ -141,6 +141,9 @@ export default ({ tweets, profile, likes, dms, checksum }) =>
         return links
       })
       .then((links) => {
+        if (!links) {
+          return
+        }
         let current = -1
 
         const findTwitterLinks = async () => {
