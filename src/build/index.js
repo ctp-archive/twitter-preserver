@@ -31,140 +31,181 @@ const checkArchive = (source) =>
     })
   })
 
+const readFileTasks = (templates, source) => [
+  { name: 'style', path: `${templates}/style.css` },
+  {
+    name: 'manifest',
+    path: `${source}/data/manifest.js`,
+    process: (str) => extractJson(str),
+  },
+  {
+    name: 'account',
+    path: `${source}/data/account.js`,
+    process: (str) => extractJson(str)[0].account,
+  },
+  {
+    name: 'verified',
+    path: `${source}/data/verified.js`,
+    process: (str) => extractJson(str)[0].verified,
+  },
+  {
+    name: 'profile',
+    path: `${source}/data/profile.js`,
+    process: (str) => extractJson(str)[0].profile,
+  },
+  {
+    name: 'tweets',
+    path: `${source}/data/tweet.js`,
+    process: (str) => extractJson(str),
+  },
+  {
+    name: 'likes',
+    path: `${source}/data/like.js`,
+    process: (str) => extractJson(str),
+  },
+  {
+    name: 'directMessages',
+    path: `${source}/data/direct-messages.js`,
+    process: (str) => extractJson(str),
+  },
+  {
+    name: 'groupDirectMessages',
+    path: `${source}/data/direct-messages-group.js`,
+    process: (str) =>
+      extractJson(str).map((message) => {
+        message.dmConversation._isGroup = true
+        return message
+      }),
+  },
+]
+
 export default ({ source, templates, output, include, expandUrls }) =>
-  new Promise(async (resolve, reject) => {
-    checkArchive(source).catch((error) => reject(error))
-
-    const style = await (await fs.readFile(`${templates}/style.css`)).toString()
-
-    const manifestContent = await (
-      await fs.readFile(`${source}/data/manifest.js`)
-    ).toString()
-
-    const checksum = crypto
-      .createHash('sha1')
-      .update(manifestContent)
-      .digest('hex')
-
-    const manifest = extractJson(manifestContent)
-
-    const account = await fs
-      .readFile(`${source}/data/account.js`)
-      .then((contents) => extractJson(contents.toString())[0].account)
-
-    const verified = await fs
-      .readFile(`${source}/data/verified.js`)
-      .then((contents) => extractJson(contents.toString())[0].verified)
-
-    const profile = await fs
-      .readFile(`${source}/data/profile.js`)
-      .then((contents) => extractJson(contents.toString())[0].profile)
-
-    const tweets = await fs
-      .readFile(`${source}/data/tweet.js`)
-      .then((contents) => extractJson(contents.toString()))
-
-    const directMessages = await fs
-      .readFile(`${source}/data/direct-messages.js`)
-      .then((contents) => extractJson(contents.toString()))
-
-    const groupDirectMessages = await fs
-      .readFile(`${source}/data/direct-messages-group.js`)
-      .then((contents) =>
-        extractJson(contents.toString()).map((message) => {
-          message.dmConversation._isGroup = true
-          return message
-        }),
-      )
-
-    let dms = []
-
-    if (include.indexOf('dms') > -1) {
-      dms = [...dms, ...directMessages]
-    }
-
-    if (include.indexOf('group-dms') > -1) {
-      dms = [...dms, ...groupDirectMessages]
-    }
-
-    const likes =
-      include.indexOf('likes') > -1
-        ? await fs
-            .readFile(`${source}/data/like.js`)
-            .then((contents) => extractJson(contents.toString()))
-        : false
-
-    addTweetThreads(tweets, account.accountId)
-
-    let resolvedUrls = false
-    if (expandUrls) {
-      resolvedUrls = await resolveUrls({
-        tweets,
-        profile,
-        likes,
-        dms,
-        checksum,
+  new Promise((resolve, reject) => {
+    const files = {}
+    checkArchive(source)
+      .then(() => fsExists(output))
+      .then((exists) => {
+        if (!exists) {
+          return fs.mkdir(output)
+        }
       })
-    }
-
-    await copyMedia({ source, include, output })
-
-    const njkEnvironment = nunjucks({
-      templates,
-      style,
-      include,
-      account,
-      manifest,
-      profile,
-      resolvedUrls,
-    })
-
-    if (!(await fsExists(output))) {
-      await fs.mkdir(output)
-    }
-    await homePage(njkEnvironment, { output, verified })
-
-    await downloadPage(njkEnvironment, {
-      output,
-      include,
-      account,
-      tweets,
-      dms,
-      likes,
-    })
-
-    if (include.indexOf('tweets') > -1) {
-      await tweetsPage(njkEnvironment, {
-        output,
-        tweets,
+      .then(copyMedia({ source, include, output }))
+      .then(() => {
+        const tasks = []
+        readFileTasks(templates, source).forEach((task) => {
+          tasks.push(
+            new Promise((resolve, reject) => {
+              fs.readFile(task.path).then((str) => {
+                const value =
+                  typeof task.process !== 'undefined'
+                    ? task.process(str.toString())
+                    : str
+                resolve({
+                  name: task.name,
+                  value,
+                })
+              })
+            }),
+          )
+        })
+        return Promise.all(tasks)
       })
-      await threadPages(njkEnvironment, {
-        output,
-        tweets,
-      })
-    }
-    if (include.indexOf('dms') > -1 || include.indexOf('group-dms') > -1) {
-      await directMessagesPage(njkEnvironment, {
-        output,
-        templates,
-        dms,
-      })
-      await directMessagePages(njkEnvironment, {
-        output,
-        templates,
-        account,
-        dms,
-      })
-    }
-    if (likes) {
-      await likesPage(njkEnvironment, {
-        output,
-        templates,
-        likes,
-      })
-    }
+      .then((values) => {
+        values.forEach(({ name, value }) => {
+          files[name] = value
+        })
 
-    resolve(source)
+        const checksum = crypto
+          .createHash('sha1')
+          .update(JSON.stringify(files.manifest))
+          .digest('hex')
+
+        if (expandUrls) {
+          return resolveUrls({
+            ...files,
+            checksum,
+          })
+        }
+        return false
+      })
+      .then((resolvedUrls) => {
+        const njkEnvironment = nunjucks({
+          ...files,
+          templates,
+          include,
+          resolvedUrls,
+        })
+
+        let dms = []
+
+        if (include.indexOf('dms') > -1) {
+          dms = [...dms, ...files.directMessages]
+        }
+
+        if (include.indexOf('group-dms') > -1) {
+          dms = [...dms, ...files.groupDirectMessages]
+        }
+
+        addTweetThreads(files.tweets, files.account.accountId)
+
+        const tasks = [
+          homePage(njkEnvironment, { output, ...files }),
+          downloadPage(njkEnvironment, {
+            output,
+            include,
+            dms,
+            ...files,
+          }),
+        ]
+
+        if (include.indexOf('tweets') > -1) {
+          tasks.push(
+            tweetsPage(njkEnvironment, {
+              output,
+              ...files,
+            }),
+          )
+          tasks.push(
+            threadPages(njkEnvironment, {
+              output,
+              ...files,
+            }),
+          )
+        }
+
+        if (include.indexOf('dms') > -1 || include.indexOf('group-dms') > -1) {
+          tasks.push(
+            directMessagesPage(njkEnvironment, {
+              output,
+              templates,
+              ...files,
+              dms,
+            }),
+          )
+          tasks.push(
+            directMessagePages(njkEnvironment, {
+              output,
+              templates,
+              ...files,
+              dms,
+            }),
+          )
+        }
+        if (include.indexOf('likes') > -1) {
+          tasks.push(
+            likesPage(njkEnvironment, {
+              output,
+              templates,
+              ...files,
+            }),
+          )
+        }
+
+        Promise.all(tasks).then(() => {
+          resolve(source)
+        })
+      })
+      .catch((error) => reject(error))
   })
 
 export { checkArchive }

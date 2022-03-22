@@ -1,8 +1,8 @@
 import fs from 'fs/promises'
 
 export default (njkEnvironment, { output, tweets }) =>
-  new Promise(async (resolve, reject) => {
-    await fs.writeFile(
+  new Promise((resolve, reject) => {
+    fs.writeFile(
       `${output}/tweets.html`,
       njkEnvironment.render('tweets.njk', {
         pageTitle: 'Tweets',
@@ -13,5 +13,6 @@ export default (njkEnvironment, { output, tweets }) =>
         tweets: tweets.map((tweet) => tweet.tweet),
       }),
     )
-    resolve()
+      .then(() => resolve())
+      .catch((error) => reject(error))
   })

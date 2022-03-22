@@ -4,15 +4,16 @@ import fsExists from 'fs.promises.exists'
 import cleanCache from '../src/clean-cache.js'
 
 describe('Clean cache', () => {
+  const dir = './.test-cache'
   it('removes cache directories', () =>
     fs
-      .mkdir('./.cache', { recursive: true })
-      .then(() => fsExists('./.cache'))
+      .mkdir(dir, { recursive: true })
+      .then(() => fsExists(dir))
       .then((exists) => {
         assert.ok(exists)
-        return cleanCache()
+        return cleanCache(dir)
       })
-      .then(fsExists('./.cache'))
+      .then(fsExists(dir))
       .then((exists) => {
         assert.ok(!exists)
       }))

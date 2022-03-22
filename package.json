@@ -33,7 +33,7 @@
     "build": "sass --no-source-map src/sass:src/templates",
     "lint": "eslint ./src",
     "mocha": "mocha",
-    "test": "run-p lint jest"
+    "test": "run-p lint mocha"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
