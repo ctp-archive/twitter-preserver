@@ -8,7 +8,4 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  rules: {
-    'no-async-promise-executor': ['off'],
-  },
 }

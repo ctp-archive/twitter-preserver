@@ -31,9 +31,9 @@
   },
   "scripts": {
     "build": "sass --no-source-map src/sass:src/templates",
-    "test:lint": "eslint ./src",
-    "test:jest": "yarn node --experimental-vm-modules $(yarn bin jest)",
-    "test": "run-p test:lint test:jest"
+    "lint": "eslint ./src",
+    "mocha": "mocha",
+    "test": "run-p lint jest"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
@@ -42,7 +42,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
-    "jest": "^27.5.1",
+    "mocha": "^9.2.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",
     "sass": "^1.49.7"

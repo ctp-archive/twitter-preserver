@@ -16,21 +16,24 @@ import crypto from 'crypto'
 const extractJson = (contents) =>
   JSON.parse(contents.replace(/window.[(A-Za-z0-9\.\_]* = /, '')) // eslint-disable-line
 
+const checkArchive = (source) =>
+  new Promise((resolve, reject) => {
+    fsExists(`${source}/Your archive.html`).then((exists) => {
+      if (!exists) {
+        reject(
+          new Error(
+            'The provided input directory or ZIP file is not a Twitter archive.',
+          ),
+        )
+        return
+      }
+      resolve()
+    })
+  })
+
 export default ({ source, templates, output, include, expandUrls }) =>
   new Promise(async (resolve, reject) => {
-    if (!(await fsExists(`${source}/Your archive.html`))) {
-      reject(
-        new Error(
-          'The provided input directory or ZIP file is not a Twitter archive.',
-        ),
-      )
-      return
-    }
-
-    if (!(await fsExists(`${templates}/style.css`))) {
-      reject(new Error('The template directory is missing a stylesheet'))
-      return
-    }
+    checkArchive(source).catch((error) => reject(error))
 
     const style = await (await fs.readFile(`${templates}/style.css`)).toString()
 
@@ -163,3 +166,5 @@ export default ({ source, templates, output, include, expandUrls }) =>
 
     resolve(source)
   })
+
+export { checkArchive }
