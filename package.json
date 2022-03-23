@@ -9,7 +9,7 @@
   },
   "type": "module",
   "bin": {
-    "twitter-archive": "cmd.js"
+    "twitter-preserver": "cmd.js"
   },
   "dependencies": {
     "autolinker": "^3.15.0",

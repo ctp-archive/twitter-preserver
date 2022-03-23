@@ -1,7 +1,7 @@
 import includes from './includes.js'
 
-export default () => `Usage: twitter-archive path/to/archive.zip
-twitter-archive --source=path/to/archive.zip
+export default () => `Usage: twitter-preserver path/to/archive.zip
+twitter-preserver --source=path/to/archive.zip
 
 Arguments:
 
