@@ -6,6 +6,7 @@ import build from './src/build/index.js'
 import cleanup from './src/cleanup.js'
 import cleanCache from './src/clean-cache.js'
 import serve from './src/serve.js'
+import prepareOutput from './src/prepare-output.js'
 import helpOutput from './src/help.js'
 
 const {
@@ -42,7 +43,7 @@ const {
 
 const includedData = include.split(',').map((item) => item.trim().toLowerCase())
 
-const run = () => {
+;(() => {
   if (clean) {
     cleanCache().then((result) => {
       console.log('Cleaned up URL cache')
@@ -53,7 +54,8 @@ const run = () => {
     console.log(helpOutput())
     return
   }
-  unzip(source, expanded)
+  prepareOutput(output)
+    .then(() => unzip(source, expanded))
     .then((path) => {
       const args = {
         source: path,
@@ -73,5 +75,7 @@ const run = () => {
       }
       return
     })
-}
-run()
+    .catch((error) => {
+      console.log(error)
+    })
+})()
