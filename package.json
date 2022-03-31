@@ -34,7 +34,8 @@
     "lint": "eslint ./src",
     "mocha": "mocha",
     "test": "run-p lint mocha",
-    "readme": "node scripts/readme.js"
+    "readme": "node scripts/readme.js",
+    "docs": "./scripts/docs.sh"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
@@ -43,6 +44,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
+    "gh-pages": "^3.2.3",
     "mocha": "^9.2.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.5.1",

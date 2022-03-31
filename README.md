@@ -1,3 +1,5 @@
+[![Unit tests](https://github.com/ctp-archive/twitter-preserver/actions/workflows/test.yml/badge.svg)](https://github.com/ctp-archive/twitter-preserver/actions/workflows/test.yml)
+
 # Twitter preserver
 
 An open-source project funded by the Alfred P. Sloan Foundation as part of the preservation of [The COVID Tracking Project](https://covidtracking.com).
@@ -12,9 +14,13 @@ When you download an archive of your user data from Twitter, the ZIP file you ar
 
 This project converts a downloaded ZIP file from Twitter into a collection of simple HTML files made to be either hosted online, or opened locally. It also converts the data into a Markdown and PDF.
 
+**[View a demonstration of a preserved Twitter account](https://ctp-archive.github.io/twitter-preserver/demo)**
+
 ## Usage
 
 `npx twitter-archiver [commands]`
+
+
 
 
 
