@@ -1,0 +1,387 @@
+[
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": []
+      },
+      "display_text_range": [
+        "0",
+        "37"
+      ],
+      "favorite_count": "0",
+      "in_reply_to_status_id_str": "1497321400138231810",
+      "id_str": "1497321527846395907",
+      "in_reply_to_user_id": "1497319353372405762",
+      "truncated": false,
+      "retweet_count": "0",
+      "id": "1497321527846395907",
+      "in_reply_to_status_id": "1497321400138231810",
+      "created_at": "Fri Feb 25 21:24:05 +0000 2022",
+      "favorited": false,
+      "full_text": "A third reply to the original thread.",
+      "lang": "en",
+      "in_reply_to_screen_name": "preservationi19",
+      "in_reply_to_user_id_str": "1497319353372405762",
+      "_threads": [],
+      "_parent_thread": "1497321400138231810"
+    }
+  },
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": []
+      },
+      "display_text_range": [
+        "0",
+        "27"
+      ],
+      "favorite_count": "0",
+      "in_reply_to_status_id_str": "1497321438809710593",
+      "id_str": "1497321488197718016",
+      "in_reply_to_user_id": "1497319353372405762",
+      "truncated": false,
+      "retweet_count": "0",
+      "id": "1497321488197718016",
+      "in_reply_to_status_id": "1497321438809710593",
+      "created_at": "Fri Feb 25 21:23:56 +0000 2022",
+      "favorited": false,
+      "full_text": "A reply to the thread reply",
+      "lang": "en",
+      "in_reply_to_screen_name": "preservationi19",
+      "in_reply_to_user_id_str": "1497319353372405762",
+      "_threads": [],
+      "_parent_thread": "1497321400138231810"
+    }
+  },
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": []
+      },
+      "display_text_range": [
+        "0",
+        "22"
+      ],
+      "favorite_count": "0",
+      "in_reply_to_status_id_str": "1497321400138231810",
+      "id_str": "1497321438809710593",
+      "in_reply_to_user_id": "1497319353372405762",
+      "truncated": false,
+      "retweet_count": "0",
+      "id": "1497321438809710593",
+      "in_reply_to_status_id": "1497321400138231810",
+      "created_at": "Fri Feb 25 21:23:44 +0000 2022",
+      "favorited": false,
+      "full_text": "A reply to the thread.",
+      "lang": "en",
+      "in_reply_to_screen_name": "preservationi19",
+      "in_reply_to_user_id_str": "1497319353372405762",
+      "_threads": [],
+      "_parent_thread": "1497321400138231810"
+    }
+  },
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": []
+      },
+      "display_text_range": [
+        "0",
+        "13"
+      ],
+      "favorite_count": "0",
+      "id_str": "1497321400138231810",
+      "truncated": false,
+      "retweet_count": "0",
+      "id": "1497321400138231810",
+      "created_at": "Fri Feb 25 21:23:35 +0000 2022",
+      "favorited": false,
+      "full_text": "A new thread.",
+      "lang": "en",
+      "_threads": [
+        "1497321527846395907",
+        "1497321488197718016",
+        "1497321438809710593"
+      ],
+      "_parent_thread": false
+    }
+  },
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [
+          {
+            "name": "preservationisttest",
+            "screen_name": "preservationi19",
+            "indices": [
+              "3",
+              "19"
+            ],
+            "id_str": "1497319353372405762",
+            "id": "1497319353372405762"
+          }
+        ],
+        "urls": [
+          {
+            "url": "https://t.co/CkxtZKWPef",
+            "expanded_url": "https://calisphere.org/",
+            "display_url": "calisphere.org",
+            "indices": [
+              "49",
+              "72"
+            ]
+          }
+        ]
+      },
+      "display_text_range": [
+        "0",
+        "92"
+      ],
+      "favorite_count": "0",
+      "id_str": "1497321116880179201",
+      "truncated": false,
+      "retweet_count": "0",
+      "id": "1497321116880179201",
+      "possibly_sensitive": false,
+      "created_at": "Fri Feb 25 21:22:27 +0000 2022",
+      "favorited": false,
+      "full_text": "RT @preservationi19: This is a tweet with a link https://t.co/CkxtZKWPef and then more text.",
+      "lang": "en",
+      "_threads": [],
+      "_parent_thread": false
+    }
+  },
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": [
+          {
+            "url": "https://t.co/CkxtZKWPef",
+            "expanded_url": "https://calisphere.org/",
+            "display_url": "calisphere.org",
+            "indices": [
+              "28",
+              "51"
+            ]
+          }
+        ]
+      },
+      "display_text_range": [
+        "0",
+        "71"
+      ],
+      "favorite_count": "1",
+      "id_str": "1497320566268698629",
+      "truncated": false,
+      "retweet_count": "1",
+      "id": "1497320566268698629",
+      "possibly_sensitive": false,
+      "created_at": "Fri Feb 25 21:20:16 +0000 2022",
+      "favorited": false,
+      "full_text": "This is a tweet with a link https://t.co/CkxtZKWPef and then more text.",
+      "lang": "en",
+      "_threads": [],
+      "_parent_thread": false
+    }
+  },
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": [
+          {
+            "url": "https://t.co/SEJQuAQgjC",
+            "expanded_url": "https://calisphere.org/item/508e8796-d019-421a-a020-353848673120/",
+            "display_url": "calisphere.org/item/508e8796-…",
+            "indices": [
+              "28",
+              "51"
+            ]
+          }
+        ]
+      },
+      "display_text_range": [
+        "0",
+        "51"
+      ],
+      "favorite_count": "0",
+      "id_str": "1497320364296204290",
+      "truncated": false,
+      "retweet_count": "0",
+      "id": "1497320364296204290",
+      "possibly_sensitive": false,
+      "created_at": "Fri Feb 25 21:19:28 +0000 2022",
+      "favorited": false,
+      "full_text": "This is a tweet with a link https://t.co/SEJQuAQgjC",
+      "lang": "en",
+      "_threads": [],
+      "_parent_thread": false
+    }
+  },
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "user_mentions": [],
+        "urls": [],
+        "symbols": [],
+        "media": [
+          {
+            "expanded_url": "https://twitter.com/preservationi19/status/1497320299238359043/photo/1",
+            "indices": [
+              "31",
+              "54"
+            ],
+            "url": "https://t.co/ub0ANAre5T",
+            "media_url": "http://pbs.twimg.com/media/FMeM3ViVgAE_n36.png",
+            "id_str": "1497320283425832961",
+            "id": "1497320283425832961",
+            "media_url_https": "https://pbs.twimg.com/media/FMeM3ViVgAE_n36.png",
+            "sizes": {
+              "large": {
+                "w": "1966",
+                "h": "956",
+                "resize": "fit"
+              },
+              "small": {
+                "w": "680",
+                "h": "331",
+                "resize": "fit"
+              },
+              "thumb": {
+                "w": "150",
+                "h": "150",
+                "resize": "crop"
+              },
+              "medium": {
+                "w": "1200",
+                "h": "584",
+                "resize": "fit"
+              }
+            },
+            "type": "photo",
+            "display_url": "pic.twitter.com/ub0ANAre5T"
+          }
+        ],
+        "hashtags": []
+      },
+      "display_text_range": [
+        "0",
+        "54"
+      ],
+      "favorite_count": "0",
+      "id_str": "1497320299238359043",
+      "truncated": false,
+      "retweet_count": "0",
+      "id": "1497320299238359043",
+      "possibly_sensitive": false,
+      "created_at": "Fri Feb 25 21:19:12 +0000 2022",
+      "favorited": false,
+      "full_text": "This is a tweet with an image. https://t.co/ub0ANAre5T",
+      "lang": "en",
+      "extended_entities": {
+        "media": [
+          {
+            "expanded_url": "https://twitter.com/preservationi19/status/1497320299238359043/photo/1",
+            "indices": [
+              "31",
+              "54"
+            ],
+            "url": "https://t.co/ub0ANAre5T",
+            "media_url": "http://pbs.twimg.com/media/FMeM3ViVgAE_n36.png",
+            "id_str": "1497320283425832961",
+            "id": "1497320283425832961",
+            "media_url_https": "https://pbs.twimg.com/media/FMeM3ViVgAE_n36.png",
+            "sizes": {
+              "large": {
+                "w": "1966",
+                "h": "956",
+                "resize": "fit"
+              },
+              "small": {
+                "w": "680",
+                "h": "331",
+                "resize": "fit"
+              },
+              "thumb": {
+                "w": "150",
+                "h": "150",
+                "resize": "crop"
+              },
+              "medium": {
+                "w": "1200",
+                "h": "584",
+                "resize": "fit"
+              }
+            },
+            "type": "photo",
+            "display_url": "pic.twitter.com/ub0ANAre5T"
+          }
+        ]
+      },
+      "_threads": [],
+      "_parent_thread": false
+    }
+  },
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
+        "urls": []
+      },
+      "display_text_range": [
+        "0",
+        "23"
+      ],
+      "favorite_count": "0",
+      "id_str": "1497319661867704322",
+      "truncated": false,
+      "retweet_count": "0",
+      "id": "1497319661867704322",
+      "created_at": "Fri Feb 25 21:16:40 +0000 2022",
+      "favorited": false,
+      "full_text": "This is my first tweet.",
+      "lang": "en",
+      "_threads": [],
+      "_parent_thread": false
+    }
+  }
+]

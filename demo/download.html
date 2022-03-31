@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Download</title>
+    <style>
+      body header {
+  border-bottom: 1px solid grey;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+body header .username {
+  display: inline-block;
+  margin-right: 2rem;
+}
+body header a,
+body header a:visited {
+  color: black;
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+body header a:last-child,
+body header a:visited:last-child {
+  margin-right: 0;
+}
+
+.container {
+  width: 100%;
+  margin: 0 2rem;
+}
+@media screen and (min-width: 1100px) {
+  .container {
+    width: 900px;
+    margin: 0 auto;
+  }
+}
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  font-size: 20px;
+  line-height: 2rem;
+  color: black;
+  background: white;
+}
+body a,
+body a:visited {
+  color: #4141cf;
+}
+
+a[target=_blank]::after {
+  content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
+  margin-left: 0.5rem;
+  display: inline-block;
+}
+
+h1.user-title {
+  display: flex;
+  align-items: center;
+}
+h1.user-title img {
+  max-width: 60px;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.verified {
+  color: white;
+  background: #1b95e0;
+  display: inline-block;
+  border-radius: 3px;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  font-weight: bold;
+  margin-left: 1.5rem;
+}
+
+.tweet {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+.tweet h2 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 1rem 0 0 1rem;
+}
+.tweet h2 a {
+  color: black;
+}
+.tweet h2 span {
+  color: grey;
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+.tweet p {
+  padding: 1rem;
+  margin: 0;
+}
+.tweet .media {
+  margin: 1rem;
+}
+.tweet .media img {
+  max-width: 100%;
+}
+.tweet .meta {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 1rem;
+  border-top: 1px solid grey;
+}
+.tweet .meta li {
+  display: inline-block;
+  margin-right: 2rem;
+}
+.tweet .meta li span {
+  font-weight: bold;
+}
+.tweet .twitter-link {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.dm-list {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+.dm-list h2 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 1rem 0 0 1rem;
+}
+.dm-list h2 a {
+  color: black;
+}
+.dm-list p {
+  padding: 1rem;
+  margin: 0;
+}
+
+.dm-thread {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.dm-thread li {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+}
+.dm-thread .message {
+  border: 1px solid grey;
+  border-radius: 20px 20px 20px 0;
+  padding: 1rem;
+  display: inline-block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.dm-thread .message .media {
+  margin: 1rem 0;
+}
+.dm-thread .message .media img,
+.dm-thread .message .media video {
+  width: 100%;
+}
+.dm-thread .is-author {
+  align-items: flex-end;
+}
+.dm-thread .is-author p,
+.dm-thread .is-author .author {
+  text-align: right;
+  margin-left: auto;
+}
+.dm-thread .is-author p {
+  border-radius: 20px 20px 0 20px;
+  color: white;
+  background: #3e547e;
+}
+.dm-thread .is-author p a {
+  color: white;
+}
+.dm-thread .author {
+  color: grey;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <a class="username" href="index.html">preservationi19</a>
+        
+          <a href="tweets.html">Tweets</a>
+        
+        
+          <a href="direct-messages.html">Direct messages</a>
+        
+        
+          <a href="likes.html">Likes</a>
+        
+        <a href="download.html">Download</a>
+      </div>
+    </header>
+    <main class="container">
+      
+  <h1>Download content</h1>
+
+  <p>Download machine-readable formats of data from <strong>preservationi19</strong>.</p>
+
+  <ul>
+    
+      <li>
+        <strong>Tweets</strong>: <a href="download/tweets.json" aria-label="Download Tweets as JSON">JSON</a> | <a href="download/tweets.csv" aria-label="Download Tweets as CSV">CSV</a>
+      </li>
+    
+    
+      <li>
+        <strong>Direct Messages</strong>: <a href="download/direct-messages.json" aria-label="Download Direct Messages as JSON">JSON</a>
+      </li>
+    
+    
+      <li>
+        <strong>Likes</strong>: <a href="download/likes.json" aria-label="Download Likes as JSON">JSON</a> | <a href="download/likes.csv" aria-label="Download Likes as CSV">CSV</a>
+      </li>
+    
+  </ul>
+
+    </main>
+  </body>
+</html>
