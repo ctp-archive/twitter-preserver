@@ -1,1 +1,99 @@
-[]
+[
+  {
+    "dmConversation": {
+      "conversationId": "1497319353372405762-1509587599794454528",
+      "messages": [
+        {
+          "messageCreate": {
+            "recipientId": "1497319353372405762",
+            "reactions": [
+              {
+                "senderId": "1497319353372405762",
+                "reactionKey": "like",
+                "eventId": "1509588984023855106",
+                "createdAt": "2022-03-31T17:50:35.274Z"
+              }
+            ],
+            "urls": [
+              {
+                "url": "https://t.co/bCtvg5Ezlg",
+                "expanded": "https://twitter.com/messages/media/1509588915065217032",
+                "display": "pic.twitter.com/bCtvg5Ezlg"
+              }
+            ],
+            "text": "This is an image I have of a Kangaroo Rat. It is CC-BY https://t.co/bCtvg5Ezlg",
+            "mediaUrls": [
+              "https://ton.twitter.com/dm/1509588915065217032/1509588907779780608/1rbPnG2-.jpg"
+            ],
+            "senderId": "1509587599794454528",
+            "id": "1509588915065217032",
+            "createdAt": "2022-03-31T17:50:18.967Z"
+          }
+        },
+        {
+          "messageCreate": {
+            "recipientId": "1509587599794454528",
+            "reactions": [
+              {
+                "senderId": "1509587599794454528",
+                "reactionKey": "excited",
+                "eventId": "1509588952457506823",
+                "createdAt": "2022-03-31T17:50:27.738Z"
+              }
+            ],
+            "urls": [],
+            "text": "I see your GIF and raise you some animal emoji 🐮🐷🐸🦧",
+            "mediaUrls": [],
+            "senderId": "1497319353372405762",
+            "id": "1509588659846074378",
+            "createdAt": "2022-03-31T17:49:17.998Z"
+          }
+        },
+        {
+          "messageCreate": {
+            "recipientId": "1497319353372405762",
+            "reactions": [],
+            "urls": [
+              {
+                "url": "https://t.co/QYZ74Z9ipy",
+                "expanded": "https://twitter.com/messages/media/1509588518556758025",
+                "display": "pic.twitter.com/QYZ74Z9ipy"
+              }
+            ],
+            "text": "Maybe with a GIF? https://t.co/QYZ74Z9ipy",
+            "mediaUrls": [
+              "https://video.twimg.com/dm_gif/1509588505206263820/6D1ew4qrwZPu2VeczJLVDN86xj7YT40-iqAzZtaw5LuCELHu8t.mp4"
+            ],
+            "senderId": "1509587599794454528",
+            "id": "1509588518556758025",
+            "createdAt": "2022-03-31T17:48:44.447Z"
+          }
+        },
+        {
+          "messageCreate": {
+            "recipientId": "1497319353372405762",
+            "reactions": [],
+            "urls": [],
+            "text": "I am replying to this message.",
+            "mediaUrls": [],
+            "senderId": "1509587599794454528",
+            "id": "1509588420804313098",
+            "createdAt": "2022-03-31T17:48:21.017Z"
+          }
+        },
+        {
+          "messageCreate": {
+            "recipientId": "1509587599794454528",
+            "reactions": [],
+            "urls": [],
+            "text": "This is a Direct Message from this account.",
+            "mediaUrls": [],
+            "senderId": "1497319353372405762",
+            "id": "1509588362159550472",
+            "createdAt": "2022-03-31T17:48:07.027Z"
+          }
+        }
+      ]
+    }
+  }
+]

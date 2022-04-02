@@ -7,6 +7,53 @@
         "hashtags": [],
         "symbols": [],
         "user_mentions": [],
+        "urls": [
+          {
+            "url": "https://t.co/CkxtZKWPef",
+            "expanded_url": "https://calisphere.org/",
+            "display_url": "calisphere.org",
+            "indices": [
+              "24",
+              "47"
+            ]
+          },
+          {
+            "url": "https://t.co/zKY820weOz",
+            "expanded_url": "https://covidtracking.com/",
+            "display_url": "covidtracking.com",
+            "indices": [
+              "52",
+              "75"
+            ]
+          }
+        ]
+      },
+      "display_text_range": [
+        "0",
+        "76"
+      ],
+      "favorite_count": "0",
+      "id_str": "1503830200185856002",
+      "truncated": false,
+      "retweet_count": "0",
+      "id": "1503830200185856002",
+      "possibly_sensitive": false,
+      "created_at": "Tue Mar 15 20:27:14 +0000 2022",
+      "favorited": false,
+      "full_text": "A tweet with two links, https://t.co/CkxtZKWPef and https://t.co/zKY820weOz.",
+      "lang": "en",
+      "_threads": [],
+      "_parent_thread": false
+    }
+  },
+  {
+    "tweet": {
+      "retweeted": false,
+      "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+      "entities": {
+        "hashtags": [],
+        "symbols": [],
+        "user_mentions": [],
         "urls": []
       },
       "display_text_range": [
@@ -112,7 +159,7 @@
       "favorite_count": "0",
       "id_str": "1497321400138231810",
       "truncated": false,
-      "retweet_count": "0",
+      "retweet_count": "1",
       "id": "1497321400138231810",
       "created_at": "Fri Feb 25 21:23:35 +0000 2022",
       "favorited": false,

@@ -1,8 +1,9 @@
 "id","created_at","link","text","favorite_count","retweet_count","parent_thread"
+"1503830200185856002","Tue Mar 15 20:27:14 +0000 2022","https://twitter.com/preservationi19/status/1503830200185856002","A tweet with two links, https://t.co/CkxtZKWPef and https://t.co/zKY820weOz.","0","0",
 "1497321527846395907","Fri Feb 25 21:24:05 +0000 2022","https://twitter.com/preservationi19/status/1497321527846395907","A third reply to the original thread.","0","0",
 "1497321488197718016","Fri Feb 25 21:23:56 +0000 2022","https://twitter.com/preservationi19/status/1497321488197718016","A reply to the thread reply","0","0",
 "1497321438809710593","Fri Feb 25 21:23:44 +0000 2022","https://twitter.com/preservationi19/status/1497321438809710593","A reply to the thread.","0","0",
-"1497321400138231810","Fri Feb 25 21:23:35 +0000 2022","https://twitter.com/preservationi19/status/1497321400138231810","A new thread.","0","0",
+"1497321400138231810","Fri Feb 25 21:23:35 +0000 2022","https://twitter.com/preservationi19/status/1497321400138231810","A new thread.","0","1",
 "1497321116880179201","Fri Feb 25 21:22:27 +0000 2022","https://twitter.com/preservationi19/status/1497321116880179201","RT @preservationi19: This is a tweet with a link https://t.co/CkxtZKWPef and then more text.","0","0",
 "1497320566268698629","Fri Feb 25 21:20:16 +0000 2022","https://twitter.com/preservationi19/status/1497320566268698629","This is a tweet with a link https://t.co/CkxtZKWPef and then more text.","1","1",
 "1497320364296204290","Fri Feb 25 21:19:28 +0000 2022","https://twitter.com/preservationi19/status/1497320364296204290","This is a tweet with a link https://t.co/SEJQuAQgjC","0","0",
