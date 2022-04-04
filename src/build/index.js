@@ -83,7 +83,6 @@ export default ({ source, templates, output, include, expandUrls }) =>
   new Promise((resolve, reject) => {
     const files = {}
     checkArchive(source)
-      .then(() => fs.mkdir(output))
       .then(copyMedia({ source, include, output }))
       .then(() => {
         const tasks = []

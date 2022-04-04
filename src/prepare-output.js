@@ -6,7 +6,9 @@ export default (output) =>
   new Promise((resolve, reject) => {
     fsExists(output).then((exists) => {
       if (!exists) {
-        resolve()
+        fs.mkdir(output).then(() => {
+          resolve()
+        })
         return
       }
       const rl = readline.createInterface({
@@ -24,9 +26,11 @@ export default (output) =>
               askToDelete()
             }
             if (answer === 'y') {
-              fs.rm(output, { recursive: true, force: true }).then(() => {
-                resolve()
-              })
+              fs.rm(output, { recursive: true, force: true })
+                .then(() => fs.mkdir(output))
+                .then(() => {
+                  resolve()
+                })
               return
             }
             reject(
