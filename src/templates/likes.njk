@@ -1,13 +1,12 @@
-{% extends "includes/base.njk" %}
-
-{% block content %}
-  <h1>{{account.username}} Likes</h1>
-  {%for like in likes %}
-    <article class="tweet" role="article">
-      <p>{{like.fullText | resolveLinks | safe }}</p>
-      <div class="meta">
-        <a href="{{ like.expandedUrl }}" class="open-twitter" target="_blank" rel="noreferrer">Open in Twitter</a>
-      </div>
-    </article>
-  {% endfor %}
-{% endblock %}
+---
+layout: layout.njk
+---
+<h1>{{account.username}} Likes</h1>
+{%for like in likes %}
+  <article class="tweet" role="article">
+    <p>{{like.fullText | resolveLinks | safe }}</p>
+    <div class="meta">
+      <a href="{{ like.expandedUrl }}" class="open-twitter" target="_blank" rel="noreferrer">Open in Twitter</a>
+    </div>
+  </article>
+{% endfor %}

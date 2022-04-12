@@ -2,9 +2,11 @@
 <html>
   <head>
     <title>{{ pageTitle }}</title>
-    <style>
-      {{style}}
-    </style>
+    {% if style %}
+      <style>
+        {{style}}
+      </style>
+    {% endif %}
   </head>
   <body>
     <header>
@@ -23,7 +25,7 @@
       </div>
     </header>
     <main class="container">
-      {% block content %}{% endblock %}
+      {{ content | safe }}
     </main>
   </body>
 </html>

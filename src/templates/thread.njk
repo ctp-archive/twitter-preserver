@@ -1,8 +1,4 @@
-{% extends "includes/base.njk" %}
-
-{% block content %}
-  <h1>{{account.username}} Tweet thread</h1>
-  {%for tweet in tweets %}
-    {% include "includes/tweet.njk" %}
-  {% endfor %}
-{% endblock %}
+<h1>{{account.username}} Tweet thread</h1>
+{%for tweet in tweets %}
+  {% include "tweet.njk" %}
+{% endfor %}

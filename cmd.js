@@ -63,9 +63,7 @@ const includedData = include.split(',').map((item) => item.trim().toLowerCase())
         output,
         include: includedData,
         expandUrls,
-      }
-      if (dev) {
-        return serve(args)
+        dev,
       }
       return build(args)
     })

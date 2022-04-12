@@ -1,17 +1,10 @@
 import fs from 'fs/promises'
 import fsExists from 'fs.promises.exists'
-import homePage from './pages/home.js'
-import downloadPage from './pages/download.js'
-import tweetsPage from './pages/tweets.js'
-import directMessagesPage from './pages/direct-messages.js'
-import threadPages from './pages/thread.js'
-import directMessagePages from './pages/direct-message.js'
 import resolveUrls from './resolve-urls.js'
-import nunjucks from './nunjucks-environment.js'
 import copyMedia from './copy-media.js'
 import addTweetThreads from './tweet-threads.js'
-import likesPage from './pages/likes.js'
 import crypto from 'crypto'
+import eleventy from './eleventy.js'
 
 const extractJson = (contents) =>
   JSON.parse(contents.replace(/window.[(A-Za-z0-9\.\_]* = /, '')) // eslint-disable-line
@@ -79,7 +72,7 @@ const readFileTasks = (templates, source) => [
   },
 ]
 
-export default ({ source, templates, output, include, expandUrls }) =>
+export default ({ source, templates, output, include, expandUrls, dev }) =>
   new Promise((resolve, reject) => {
     const files = {}
     checkArchive(source)
@@ -123,13 +116,6 @@ export default ({ source, templates, output, include, expandUrls }) =>
         return false
       })
       .then((resolvedUrls) => {
-        const njkEnvironment = nunjucks({
-          ...files,
-          templates,
-          include,
-          resolvedUrls,
-        })
-
         let dms = []
 
         if (include.indexOf('dms') > -1) {
@@ -142,60 +128,15 @@ export default ({ source, templates, output, include, expandUrls }) =>
 
         addTweetThreads(files.tweets, files.account.accountId)
 
-        const tasks = [
-          homePage(njkEnvironment, { output, ...files }),
-          downloadPage(njkEnvironment, {
-            output,
-            include,
-            dms,
-            ...files,
-          }),
-        ]
-
-        if (include.indexOf('tweets') > -1) {
-          tasks.push(
-            tweetsPage(njkEnvironment, {
-              output,
-              ...files,
-            }),
-          )
-          tasks.push(
-            threadPages(njkEnvironment, {
-              output,
-              ...files,
-            }),
-          )
-        }
-
-        if (include.indexOf('dms') > -1 || include.indexOf('group-dms') > -1) {
-          tasks.push(
-            directMessagesPage(njkEnvironment, {
-              output,
-              templates,
-              ...files,
-              dms,
-            }),
-          )
-          tasks.push(
-            directMessagePages(njkEnvironment, {
-              output,
-              templates,
-              ...files,
-              dms,
-            }),
-          )
-        }
-        if (include.indexOf('likes') > -1) {
-          tasks.push(
-            likesPage(njkEnvironment, {
-              output,
-              templates,
-              ...files,
-            }),
-          )
-        }
-
-        Promise.all(tasks).then(() => {
+        eleventy({
+          templates,
+          output,
+          ...files,
+          include,
+          resolvedUrls,
+          dms,
+          dev,
+        }).then(() => {
           resolve(source)
         })
       })

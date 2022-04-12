@@ -1,25 +1,24 @@
-{% extends "includes/base.njk" %}
+---
+layout: layout.njk
+---
+<h1>Download content</h1>
 
-{% block content %}
-  <h1>Download content</h1>
+<p>Download machine-readable formats of data from <strong>{{account.username}}</strong>.</p>
 
-  <p>Download machine-readable formats of data from <strong>{{account.username}}</strong>.</p>
-
-  <ul>
-    {%if include.tweets %}
-      <li>
-        <strong>Tweets</strong>: <a href="download/tweets.json" aria-label="Download Tweets as JSON">JSON</a> | <a href="download/tweets.csv" aria-label="Download Tweets as CSV">CSV</a>
-      </li>
-    {% endif %}
-    {%if include.dms or include['group-dms'] %}
-      <li>
-        <strong>Direct Messages</strong>: <a href="download/direct-messages.json" aria-label="Download Direct Messages as JSON">JSON</a>
-      </li>
-    {% endif %}
-    {%if include.likes %}
-      <li>
-        <strong>Likes</strong>: <a href="download/likes.json" aria-label="Download Likes as JSON">JSON</a> | <a href="download/likes.csv" aria-label="Download Likes as CSV">CSV</a>
-      </li>
-    {% endif %}
-  </ul>
-{% endblock %}
+<ul>
+  {%if include.tweets %}
+    <li>
+      <strong>Tweets</strong>: <a href="download/tweets.json" aria-label="Download Tweets as JSON">JSON</a> | <a href="download/tweets.csv" aria-label="Download Tweets as CSV">CSV</a>
+    </li>
+  {% endif %}
+  {%if include.dms or include['group-dms'] %}
+    <li>
+      <strong>Direct Messages</strong>: <a href="download/direct-messages.json" aria-label="Download Direct Messages as JSON">JSON</a>
+    </li>
+  {% endif %}
+  {%if include.likes %}
+    <li>
+      <strong>Likes</strong>: <a href="download/likes.json" aria-label="Download Likes as JSON">JSON</a> | <a href="download/likes.csv" aria-label="Download Likes as CSV">CSV</a>
+    </li>
+  {% endif %}
+</ul>
