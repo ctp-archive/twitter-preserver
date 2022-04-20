@@ -2,8 +2,11 @@
 <html>
   <head>
     <title>{{ pageTitle }}</title>
+    {% set css %}
+    {% include "style.css" %}
+    {% endset %}
     <style>
-      {{style}}
+      {{css | cssmin | safe}}
     </style>
   </head>
   <body>
@@ -23,7 +26,7 @@
       </div>
     </header>
     <main class="container">
-      {% block content %}{% endblock %}
+      {{ content | safe }}
     </main>
   </body>
 </html>

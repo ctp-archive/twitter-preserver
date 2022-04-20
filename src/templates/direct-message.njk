@@ -1,35 +1,40 @@
-{% extends "includes/base.njk" %}
-
-{% block content %}
-  <h1>{{account.username}} Direct Message</h1>
+---
+layout: layout.njk
+pagination:
+  data: dmConversations
+  size: 1
+  alias: messages
+permalink: "direct-messages/{{ messages.conversationId }}.html"
+pathPrefix: ../
+---
+<h1>{{account.username}} Direct Message</h1>
+<p>
+  <strong>Conversation ID:</strong>
+  {{messages.conversationId}}</p>
+{% if messages._isGroup %}
   <p>
-    <strong>Conversation ID:</strong>
-    {{dm.conversationId}}</p>
-  {% if dm._isGroup %}
-    <p>
-      <strong>Group messages</strong>
-    </p>
-  {% endif %}
-  <ul class="dm-thread">
-    {%for message in dm.messages %}
-      <li {% if message.isAuthor %}class="is-author"{% endif %}>
-        <div class="message">
-          {{ message.messageCreate.text | resolveLinks | safe }}
-          {%for media in message.messageCreate.mediaUrls %}
-            <span class="media">
-              {{media | dmMedia(message.messageCreate.id, dm._isGroup) | safe }}
-            </span>
-            {% endfor%}
-          </div>
+    <strong>Group messages</strong>
+  </p>
+{% endif %}
+<ul class="dm-thread">
+  {%for message in messages.messages %}
+    <li {% if message.isAuthor %}class="is-author"{% endif %}>
+      <div class="message">
+        {{ message.messageCreate.text | resolveLinks | safe }}
+        {%for media in message.messageCreate.mediaUrls %}
+          <span class="media">
+            {{media | dmMedia(message.messageCreate.id, dm._isGroup) | safe }}
+          </span>
+          {% endfor%}
+        </div>
 
-          <div class="author">
-            {% if message.isAuthor %}
-              {{account.username}}
-            {% else %}
-              {{message.messageCreate.senderId}}
-            {% endif %} at {{message.messageCreate.createdAt | dateFromISO }}
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  {% endblock %}
+        <div class="author">
+          {% if message.isAuthor %}
+            {{account.username}}
+          {% else %}
+            {{message.messageCreate.senderId}}
+          {% endif %} at {{message.messageCreate.createdAt | dateFromISO }}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>

@@ -169,12 +169,13 @@ h1.user-title img {
   text-align: right;
   margin-left: auto;
 }
-.dm-thread .is-author p {
+.dm-thread .is-author .message {
   border-radius: 20px 20px 0 20px;
   color: white;
   background: #3e547e;
+  margin-left: auto;
 }
-.dm-thread .is-author p a {
+.dm-thread .is-author .message a {
   color: white;
 }
 .dm-thread .author {

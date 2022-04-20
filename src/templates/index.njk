@@ -1,29 +1,29 @@
-{% extends "includes/base.njk" %}
+---
+layout: layout.njk
+---
+<h1 class="user-title">
+  <img src="media/profile_media/{{account.accountId}}-{{profile.avatarMediaUrl | profileMediaFile }}"/>{{account.username}}
+  {% if verified.verified %}
+    <span class="verified">Verified</span>{% endif %}
+</h1>
+<p>All the Tweets of <a href="https://twitter.com/{{account.username}}">{{account.accountDisplayName}}</a>.</p>
+<p>
+This archive was generated on <strong>{{manifest.archiveInfo.generationDate | dateFromISO }}</strong>.
+</p>
 
-{% block content %}
-  <h1 class="user-title">
-    <img src="media/profile_media/{{account.accountId}}-{{profile.avatarMediaUrl | profileMediaFile }}"/>{{account.username}}
-    {% if verified.verified %}
-      <span class="verified">Verified</span>{% endif %}
-  </h1>
-  <p>All the Tweets of <a href="https://twitter.com/{{account.username}}">{{account.accountDisplayName}}</a>.
+<h2>Twitter bio</h2>
+<p>
+  {{ profile.description.bio }}
+</p>
+{% if profile.description.website %}
   <p>
-  This archive was generated on <strong>{{manifest.archiveInfo.generationDate | dateFromISO }}</strong>.
-
-  <h2>Twitter bio</h2>
-      <p>
-        {{ profile.description.bio }}
-      </p>
-      {% if profile.description.website %}
-        <p>
-          <strong>Website:</strong>
-          <a href="{{profile.description.website | twitterUrl}}">{{profile.description.website | twitterUrl}}</a>
-        </p>
-      {% endif %}
-      {% if profile.description.location %}
-        <p>
-          <strong>Location:</strong>
-          {{profile.description.location}}
-        </p>
-      {% endif %}
-    {% endblock %}
+    <strong>Website:</strong>
+    <a href="{{profile.description.website | twitterUrl}}">{{profile.description.website | twitterUrl}}</a>
+  </p>
+{% endif %}
+{% if profile.description.location %}
+  <p>
+    <strong>Location:</strong>
+    {{profile.description.location}}
+  </p>
+{% endif %}

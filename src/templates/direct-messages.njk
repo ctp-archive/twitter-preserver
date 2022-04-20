@@ -1,24 +1,24 @@
-{% extends "includes/base.njk" %}
-
-{% block content %}
-  <h1>{{account.username}} Direct Messages</h1>
-  {%for dm in dms %}
-    <article role="article" class="tweet">
-      <h2>
-        <a href="#{{dm.id}}" id="{{dm.id}}">{{dm.createdAt | dateFromISO }}</a>
-      </h2>
-      <p>{{dm.text |  resolveLinks | limitLength(300)  | safe}}</p>
-      <ul class="meta">
-        <li>{{dm._messageCount}} message{%if dm._messageCount > 1%}s{% endif %}
+---
+layout: layout.njk
+permalink: direct-messages.html
+---
+<h1>{{account.username}} Direct Messages</h1>
+{%for dm in dmList %}
+  <article role="article" class="tweet">
+    <h2>
+      <a href="#{{dm.id}}" id="{{dm.id}}">{{dm.createdAt | dateFromISO }}</a>
+    </h2>
+    <p>{{dm.text | resolveLinks | limitLength(300) | safe}}</p>
+    <ul class="meta">
+      <li>
+        {{dm._messageCount}} message{%if dm._messageCount > 1%}s{% endif %}
+      </li>
+      {% if dm._isGroup %}
+        <li>Group message</li>
+        {% endif%}
+        <li>
+          <a href="direct-messages/{{dm.id}}.html">View Direct Message</a>
         </li>
-        {% if dm._isGroup %}
-          <li>Group message</li>
-          {% endif%}
-          <li>
-            <a href="direct-messages/{{dm.id}}.html">View Direct Message</a>
-          </li>
-        </ul>
-      </article>
-      {{dm.conversationId}}
-    {% endfor %}
-  {% endblock %}
+      </ul>
+    </article>
+  {% endfor %}

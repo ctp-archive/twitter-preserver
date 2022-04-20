@@ -47,10 +47,11 @@
       text-align: right;
       margin-left: auto;
     }
-    p {
+    .message {
       border-radius: 20px 20px 0 20px;
       color: $dm-author-text;
       background: $dm-author-background;
+      margin-left: auto;
       a {
         color: $dm-author-text;
       }

@@ -1,8 +1,9 @@
-{% extends "includes/base.njk" %}
-
-{% block content %}
-  <h1>{{account.username}} Tweets</h1>
-  {%for tweet in tweets %}
-    {% include "includes/tweet.njk" %}
-  {% endfor %}
-{% endblock %}
+---
+layout: layout.njk
+permalink: tweets.html
+---
+{% set showThreadLink = true %}
+<h1>{{account.username}} Tweets</h1>
+{%for tweet in tweets %}
+  {% include "tweet.njk" %}
+{% endfor %}

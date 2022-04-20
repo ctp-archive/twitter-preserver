@@ -4,10 +4,7 @@ import ora from 'ora'
 import chalk from 'chalk'
 import { Parser } from 'json2csv'
 
-export default (
-  njkEnvironment,
-  { output, account, include, tweets, dms, likes },
-) =>
+export default ({ output, account, include, tweets, dms, likes }) =>
   new Promise((resolve, reject) => {
     const spinner = ora({
       spinner: 'boxBounce',
@@ -22,15 +19,6 @@ export default (
       })
       .then(() => {
         const tasks = []
-        tasks.push(
-          fs.writeFile(
-            `${output}/download.html`,
-            njkEnvironment.render('download.njk', {
-              pageTitle: `Download`,
-              path: '',
-            }),
-          ),
-        )
 
         if (include.indexOf('tweets') > -1) {
           tasks.push(
