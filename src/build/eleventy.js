@@ -2,17 +2,16 @@ import Eleventy from '@11ty/eleventy'
 import { DateTime } from 'luxon'
 import path from 'path'
 import autolinker from 'autolinker'
+import CleanCSS from 'clean-css'
 import ellipsize from 'ellipsize'
 import isImage from 'is-image'
 import allowedIncludes from '../includes.js'
 import twitterRegex from './twitter-regex.js'
 
 const dateFormat = DateTime.DATETIME_FULL
-
 export default ({
   templates,
   output,
-  style,
   account,
   manifest,
   profile,
@@ -26,21 +25,89 @@ export default ({
   const elev = new Eleventy(templates, output, {
     quietMode: false,
     config: (eleventyConfig) => {
-      if (style) {
-        eleventyConfig.addGlobalData('style', style)
-      }
+      eleventyConfig.addFilter('cssmin', function (code) {
+        return new CleanCSS({}).minify(code).styles
+      })
+
       eleventyConfig.addGlobalData('account', account)
       eleventyConfig.addGlobalData('manifest', manifest)
       eleventyConfig.addGlobalData('profile', profile)
-      eleventyConfig.addGlobalData(
-        'tweets',
-        tweets.map((tweet) => tweet.tweet),
-      )
-      eleventyConfig.addGlobalData('dms', dms)
-      eleventyConfig.addGlobalData(
-        'likes',
-        likes.map(({ like }) => like),
-      )
+
+      if (include.indexOf('tweets') > -1) {
+        eleventyConfig.addGlobalData(
+          'tweets',
+          tweets.map((tweet) => tweet.tweet),
+        )
+
+        eleventyConfig.addGlobalData(
+          'threads',
+          tweets
+            .filter(({ tweet }) => tweet._threads.length)
+            .map(({ tweet }) => ({
+              id: tweet.id,
+              tweets: [
+                tweet,
+                ...tweets
+                  .filter(
+                    (childTweet) =>
+                      tweet._threads.indexOf(childTweet.tweet.id) > -1,
+                  )
+                  .map((childTweet) => childTweet.tweet)
+                  .reverse(),
+              ],
+            })),
+        )
+      }
+
+      if (include.indexOf('dms') > -1 || include.indexOf('group-dms') > -1) {
+        eleventyConfig.addGlobalData(
+          'dmConversations',
+          dms.map(({ dmConversation }) => {
+            dmConversation.messages = dmConversation.messages
+              .reverse()
+              .filter((message) => typeof message.messageCreate !== 'undefined')
+              .map((conversation) => {
+                conversation.isAuthor = conversation.messageCreate
+                  ? conversation.messageCreate.senderId === account.accountId
+                  : false
+                return conversation
+              })
+            return dmConversation
+          }),
+        )
+
+        eleventyConfig.addGlobalData(
+          'dmList',
+          dms
+            .filter(
+              (dm) =>
+                dm.dmConversation.messages.filter(
+                  (message) => typeof message.messageCreate !== 'undefined',
+                ).length,
+            )
+            .map((dm) => {
+              const message = dm.dmConversation.messages.filter(
+                (message) => typeof message.messageCreate !== 'undefined',
+              )
+              const length = message.length
+
+              return {
+                ...message.pop().messageCreate,
+                _messageCount: length,
+                id: dm.dmConversation.conversationId,
+                _isGroup: dm.dmConversation._isGroup || false,
+              }
+            })
+            .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)),
+        )
+      }
+
+      if (include.indexOf('likes') > -1) {
+        eleventyConfig.addGlobalData(
+          'likes',
+          likes.map(({ like }) => like),
+        )
+      }
 
       eleventyConfig.addWatchTarget(`${templates}/*.css`)
 

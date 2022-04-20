@@ -17,6 +17,7 @@
     "browser-sync": "^2.27.7",
     "chalk": "^5.0.1",
     "chokidar": "^3.5.3",
+    "clean-css": "^5.3.0",
     "command-line-args": "^5.2.0",
     "crypto": "^1.0.1",
     "ellipsize": "^0.5.1",
@@ -31,7 +32,7 @@
     "recursive-copy": "^2.0.13"
   },
   "scripts": {
-    "build": "sass --no-source-map src/sass:src/templates",
+    "sass": "sass --no-source-map src/sass:src/templates/_includes",
     "lint": "eslint ./src",
     "mocha": "mocha",
     "test": "run-p lint mocha",

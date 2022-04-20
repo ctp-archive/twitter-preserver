@@ -2,11 +2,12 @@
 <html>
   <head>
     <title>{{ pageTitle }}</title>
-    {% if style %}
-      <style>
-        {{style}}
-      </style>
-    {% endif %}
+    {% set css %}
+    {% include "style.css" %}
+    {% endset %}
+    <style>
+      {{css | cssmin | safe}}
+    </style>
   </head>
   <body>
     <header>

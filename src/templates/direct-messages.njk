@@ -1,15 +1,17 @@
 ---
 layout: layout.njk
+permalink: direct-messages.html
 ---
 <h1>{{account.username}} Direct Messages</h1>
-{%for dm in dms %}
+{%for dm in dmList %}
   <article role="article" class="tweet">
     <h2>
       <a href="#{{dm.id}}" id="{{dm.id}}">{{dm.createdAt | dateFromISO }}</a>
     </h2>
-    <p>{{dm.text |  resolveLinks | limitLength(300)  | safe}}</p>
+    <p>{{dm.text | resolveLinks | limitLength(300) | safe}}</p>
     <ul class="meta">
-      <li>{{dm._messageCount}} message{%if dm._messageCount > 1%}s{% endif %}
+      <li>
+        {{dm._messageCount}} message{%if dm._messageCount > 1%}s{% endif %}
       </li>
       {% if dm._isGroup %}
         <li>Group message</li>
@@ -19,5 +21,4 @@ layout: layout.njk
         </li>
       </ul>
     </article>
-    {{dm.conversationId}}
   {% endfor %}

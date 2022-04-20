@@ -5,7 +5,6 @@ import unzip from './src/unzip.js'
 import build from './src/build/index.js'
 import cleanup from './src/cleanup.js'
 import cleanCache from './src/clean-cache.js'
-import prepareOutput from './src/prepare-output.js'
 import helpOutput from './src/help.js'
 
 const {
@@ -53,8 +52,7 @@ const includedData = include.split(',').map((item) => item.trim().toLowerCase())
     console.log(helpOutput())
     return
   }
-  prepareOutput(output)
-    .then(() => unzip(source, expanded))
+  unzip(source, expanded)
     .then((path) => {
       const args = {
         source: path,

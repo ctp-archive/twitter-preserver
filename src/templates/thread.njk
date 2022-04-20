@@ -1,4 +1,13 @@
+---
+layout: layout.njk
+pagination:
+  data: threads
+  size: 1
+  alias: thread
+permalink: "thread/{{ thread.id }}.html"
+pathPrefix: ../
+---
 <h1>{{account.username}} Tweet thread</h1>
-{%for tweet in tweets %}
+{%for tweet in thread.tweets %}
   {% include "tweet.njk" %}
 {% endfor %}

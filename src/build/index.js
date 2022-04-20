@@ -5,6 +5,7 @@ import copyMedia from './copy-media.js'
 import addTweetThreads from './tweet-threads.js'
 import crypto from 'crypto'
 import eleventy from './eleventy.js'
+import download from './download.js'
 
 const extractJson = (contents) =>
   JSON.parse(contents.replace(/window.[(A-Za-z0-9\.\_]* = /, '')) // eslint-disable-line
@@ -25,7 +26,6 @@ const checkArchive = (source) =>
   })
 
 const readFileTasks = (templates, source) => [
-  { name: 'style', path: `${templates}/style.css` },
   {
     name: 'manifest',
     path: `${source}/data/manifest.js`,
@@ -127,18 +127,27 @@ export default ({ source, templates, output, include, expandUrls, dev }) =>
         }
 
         addTweetThreads(files.tweets, files.account.accountId)
-
-        eleventy({
+        download({
           templates,
           output,
           ...files,
           include,
-          resolvedUrls,
           dms,
-          dev,
-        }).then(() => {
-          resolve(source)
         })
+          .then(() =>
+            eleventy({
+              templates,
+              output,
+              ...files,
+              include,
+              resolvedUrls,
+              dms,
+              dev,
+            }),
+          )
+          .then(() => {
+            resolve(source)
+          })
       })
       .catch((error) => reject(error))
   })
