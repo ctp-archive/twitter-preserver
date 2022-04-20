@@ -6,9 +6,7 @@ export default (output) =>
   new Promise((resolve, reject) => {
     fsExists(output).then((exists) => {
       if (!exists) {
-        fs.mkdir(output).then(() => {
-          resolve()
-        })
+        resolve()
         return
       }
       const rl = readline.createInterface({

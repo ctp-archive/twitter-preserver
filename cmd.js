@@ -5,7 +5,6 @@ import unzip from './src/unzip.js'
 import build from './src/build/index.js'
 import cleanup from './src/cleanup.js'
 import cleanCache from './src/clean-cache.js'
-import serve from './src/serve.js'
 import prepareOutput from './src/prepare-output.js'
 import helpOutput from './src/help.js'
 

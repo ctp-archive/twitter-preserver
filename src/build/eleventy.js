@@ -7,6 +7,8 @@ import isImage from 'is-image'
 import allowedIncludes from '../includes.js'
 import twitterRegex from './twitter-regex.js'
 
+const dateFormat = DateTime.DATETIME_FULL
+
 export default ({
   templates,
   output,
