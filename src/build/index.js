@@ -6,6 +6,7 @@ import addTweetThreads from './tweet-threads.js'
 import crypto from 'crypto'
 import eleventy from './eleventy.js'
 import download from './download.js'
+import renderPdf from './pdf.js'
 
 const extractJson = (contents) =>
   JSON.parse(contents.replace(/window.[(A-Za-z0-9\.\_]* = /, '')) // eslint-disable-line
@@ -72,7 +73,7 @@ const readFileTasks = (templates, source) => [
   },
 ]
 
-export default ({ source, templates, output, include, expandUrls, dev }) =>
+export default ({ source, templates, output, include, expandUrls, pdf, dev }) =>
   new Promise((resolve, reject) => {
     const files = {}
     checkArchive(source)
@@ -152,6 +153,11 @@ export default ({ source, templates, output, include, expandUrls, dev }) =>
               dev,
             }),
           )
+          .then(() => {
+            if (pdf) {
+              return renderPdf({ output })
+            }
+          })
           .then(() => {
             resolve(source)
           })

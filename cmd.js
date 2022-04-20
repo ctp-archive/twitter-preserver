@@ -11,6 +11,7 @@ const {
   source,
   expanded,
   output,
+  pdf,
   templates,
   dev,
   help,
@@ -21,6 +22,7 @@ const {
   { name: 'source', alias: 's', type: String, defaultOption: true },
   { name: 'output', alias: 'o', type: String, defaultValue: './public' },
   { name: 'expanded', alias: 'e', type: Boolean, defaultValue: false },
+  { name: 'pdf', alias: 'p', type: Boolean, defaultValue: false },
   { name: 'dev', alias: 'd', type: Boolean, defaultValue: false },
   {
     name: 'include',
@@ -53,17 +55,17 @@ const includedData = include.split(',').map((item) => item.trim().toLowerCase())
     return
   }
   unzip(source, expanded)
-    .then((path) => {
-      const args = {
+    .then((path) =>
+      build({
         source: path,
         templates,
         output,
         include: includedData,
         expandUrls,
+        pdf,
         dev,
-      }
-      return build(args)
-    })
+      }),
+    )
     .then((path) => {
       if (!expanded) {
         return cleanup(path)
