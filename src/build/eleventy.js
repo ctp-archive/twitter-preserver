@@ -3,6 +3,8 @@ import { DateTime } from 'luxon'
 import path from 'path'
 import autolinker from 'autolinker'
 import CleanCSS from 'clean-css'
+import ora from 'ora'
+import chalk from 'chalk'
 import ellipsize from 'ellipsize'
 import isImage from 'is-image'
 import allowedIncludes from '../includes.js'
@@ -23,8 +25,12 @@ export default ({
   dev,
 }) =>
   new Promise((resolve, reject) => {
+    const spinner = ora({
+      spinner: 'boxBounce',
+      text: 'Generating HTML output',
+    }).start()
     const elev = new Eleventy(templates, output, {
-      quietMode: false,
+      quietMode: true,
       config: (eleventyConfig) => {
         eleventyConfig.addFilter('cssmin', function (code) {
           return new CleanCSS({}).minify(code).styles
@@ -75,7 +81,6 @@ export default ({
                     : false
                   return conversation
                 })
-              dmConversation.pageId = `${dmConversation.conversationId}-${index}`
               return dmConversation
             }),
           )
@@ -99,7 +104,7 @@ export default ({
                   ...message.pop().messageCreate,
                   _messageCount: length,
                   id: dm.dmConversation.conversationId,
-                  pageId: `${dm.dmConversation.conversationId}-${index}`,
+                  hash: dm.dmConversation.hash,
                   _isGroup: dm.dmConversation._isGroup || false,
                 }
               })
@@ -271,6 +276,10 @@ export default ({
         .write()
         .then(() => {
           resolve()
+          spinner.stopAndPersist({
+            symbol: chalk.green('✔️'),
+            text: `Generated HTML output`,
+          })
         })
         .catch((error) => reject(error))
     }

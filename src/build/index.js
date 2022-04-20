@@ -125,6 +125,13 @@ export default ({ source, templates, output, include, expandUrls, dev }) =>
         if (include.indexOf('group-dms') > -1) {
           dms = [...dms, ...files.groupDirectMessages]
         }
+        dms = dms.map((d) => {
+          d.dmConversation.hash = crypto
+            .createHash('sha1')
+            .update(JSON.stringify(d))
+            .digest('hex')
+          return d
+        })
 
         addTweetThreads(files.tweets, files.account.accountId)
         download({

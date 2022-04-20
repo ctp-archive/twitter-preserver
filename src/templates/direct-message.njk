@@ -4,7 +4,7 @@ pagination:
   data: dmConversations
   size: 1
   alias: messages
-permalink: "direct-messages/{{ messages.conversationId }}.html"
+permalink: "direct-messages/{{ messages.hash }}.html"
 pathPrefix: ../
 ---
 <h1>{{account.username}} Direct Message</h1>
