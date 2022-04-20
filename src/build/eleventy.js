@@ -63,7 +63,7 @@ export default ({
         if (include.indexOf('dms') > -1 || include.indexOf('group-dms') > -1) {
           eleventyConfig.addGlobalData(
             'dmConversations',
-            dms.map(({ dmConversation }) => {
+            dms.map(({ dmConversation }, index) => {
               dmConversation.messages = dmConversation.messages
                 .reverse()
                 .filter(
@@ -75,6 +75,7 @@ export default ({
                     : false
                   return conversation
                 })
+              dmConversation.pageId = `${dmConversation.conversationId}-${index}`
               return dmConversation
             }),
           )
@@ -88,7 +89,7 @@ export default ({
                     (message) => typeof message.messageCreate !== 'undefined',
                   ).length,
               )
-              .map((dm) => {
+              .map((dm, index) => {
                 const message = dm.dmConversation.messages.filter(
                   (message) => typeof message.messageCreate !== 'undefined',
                 )
@@ -98,6 +99,7 @@ export default ({
                   ...message.pop().messageCreate,
                   _messageCount: length,
                   id: dm.dmConversation.conversationId,
+                  pageId: `${dm.dmConversation.conversationId}-${index}`,
                   _isGroup: dm.dmConversation._isGroup || false,
                 }
               })
