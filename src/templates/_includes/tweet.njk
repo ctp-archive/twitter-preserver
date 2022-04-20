@@ -7,7 +7,7 @@
   {% if tweet.entities.media %}
     {%for media in tweet.entities.media %}
       <div class="media">
-        <img src="{{media.media_url | mediaUrl(tweet.id) }}" alt="" aria-hidden/>
+        <img src="{{pathPrefix}}{{media.media_url | mediaUrl(tweet.id) }}" alt="" aria-hidden/>
       </div>
       {% endfor%}
     {% endif %}

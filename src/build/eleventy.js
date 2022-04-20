@@ -3,6 +3,8 @@ import { DateTime } from 'luxon'
 import path from 'path'
 import autolinker from 'autolinker'
 import CleanCSS from 'clean-css'
+import ora from 'ora'
+import chalk from 'chalk'
 import ellipsize from 'ellipsize'
 import isImage from 'is-image'
 import allowedIncludes from '../includes.js'
@@ -23,8 +25,12 @@ export default ({
   dev,
 }) =>
   new Promise((resolve, reject) => {
+    const spinner = ora({
+      spinner: 'boxBounce',
+      text: 'Generating HTML output',
+    }).start()
     const elev = new Eleventy(templates, output, {
-      quietMode: false,
+      quietMode: true,
       config: (eleventyConfig) => {
         eleventyConfig.addFilter('cssmin', function (code) {
           return new CleanCSS({}).minify(code).styles
@@ -63,7 +69,7 @@ export default ({
         if (include.indexOf('dms') > -1 || include.indexOf('group-dms') > -1) {
           eleventyConfig.addGlobalData(
             'dmConversations',
-            dms.map(({ dmConversation }) => {
+            dms.map(({ dmConversation }, index) => {
               dmConversation.messages = dmConversation.messages
                 .reverse()
                 .filter(
@@ -88,7 +94,7 @@ export default ({
                     (message) => typeof message.messageCreate !== 'undefined',
                   ).length,
               )
-              .map((dm) => {
+              .map((dm, index) => {
                 const message = dm.dmConversation.messages.filter(
                   (message) => typeof message.messageCreate !== 'undefined',
                 )
@@ -98,6 +104,7 @@ export default ({
                   ...message.pop().messageCreate,
                   _messageCount: length,
                   id: dm.dmConversation.conversationId,
+                  hash: dm.dmConversation.hash,
                   _isGroup: dm.dmConversation._isGroup || false,
                 }
               })
@@ -269,6 +276,10 @@ export default ({
         .write()
         .then(() => {
           resolve()
+          spinner.stopAndPersist({
+            symbol: chalk.green('✔️'),
+            text: `Generated HTML output`,
+          })
         })
         .catch((error) => reject(error))
     }
