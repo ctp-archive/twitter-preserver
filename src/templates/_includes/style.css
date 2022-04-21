@@ -4,6 +4,19 @@ body header {
   padding: 0.5rem;
   font-weight: bold;
 }
+@media print {
+  body header {
+    display: none;
+  }
+}
+body header.print-only {
+  display: none;
+}
+@media print {
+  body header.print-only {
+    display: block;
+  }
+}
 body header .username {
   display: inline-block;
   margin-right: 2rem;
@@ -29,6 +42,12 @@ body header a:visited:last-child {
     margin: 0 auto;
   }
 }
+@media print {
+  .container {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+}
 
 body {
   font-family: sans-serif;
@@ -40,7 +59,7 @@ body {
 }
 body a,
 body a:visited {
-  color: #4141cf;
+  color: rgb(65, 65, 207);
 }
 
 a[target=_blank]::after {
@@ -68,6 +87,25 @@ h1.user-title img {
   padding: 0 0.5rem;
   font-weight: bold;
   margin-left: 1.5rem;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+.print-only {
+  display: none !important;
+}
+@media print {
+  .print-only {
+    display: block !important;
+  }
+}
+
+code {
+  font-size: 0.8rem;
 }
 
 .tweet {
@@ -113,9 +151,22 @@ h1.user-title img {
 .tweet .meta li span {
   font-weight: bold;
 }
-.tweet .twitter-link {
+.tweet .meta li.twitter-print-link {
+  display: none;
+}
+@media print {
+  .tweet .meta li.twitter-print-link {
+    display: block;
+  }
+}
+.tweet .meta li.twitter-link {
   margin-left: auto;
   margin-right: 0;
+}
+@media print {
+  .tweet .meta li.twitter-link {
+    display: none;
+  }
 }
 
 .dm-list {

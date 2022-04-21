@@ -39,3 +39,19 @@ h1 {
   font-weight: bold;
   margin-left: 1.5rem;
 }
+
+.no-print {
+  @media print {
+    display: none !important;
+  }
+}
+.print-only {
+  display: none !important;
+  @media print {
+    display: block !important;
+  }
+}
+
+code {
+  font-size: 0.8rem;
+}

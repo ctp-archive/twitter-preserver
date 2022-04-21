@@ -3,6 +3,17 @@ body header {
   margin-bottom: 2rem;
   padding: 0.5rem;
   font-weight: bold;
+
+  @media print {
+    display: none;
+  }
+  &.print-only {
+    display: none;
+
+    @media print {
+      display: block;
+    }
+  }
   .username {
     display: inline-block;
     margin-right: 2rem;

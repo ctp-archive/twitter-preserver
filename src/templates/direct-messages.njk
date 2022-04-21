@@ -16,8 +16,12 @@ permalink: direct-messages.html
       {% if dm._isGroup %}
         <li>Group message</li>
         {% endif%}
-        <li>
+
+        <li class="no-print">
           <a href="direct-messages/{{dm.hash}}.html">View Direct Message</a>
+        </li>
+        <li class="print-only">
+          <code>{{dm.hash}}.pdf</code>
         </li>
       </ul>
     </article>
