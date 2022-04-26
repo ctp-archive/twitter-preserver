@@ -1,7 +1,12 @@
+html {
+  font-size: 20px;
+  @media print {
+    font-size: 16px;
+  }
+}
 body {
   font-family: sans-serif;
   margin: 0;
-  font-size: 20px;
   line-height: 2rem;
   color: $text-color;
   background: $body-background-color;
@@ -45,6 +50,7 @@ h1 {
     display: none !important;
   }
 }
+
 .print-only {
   display: none !important;
   @media print {

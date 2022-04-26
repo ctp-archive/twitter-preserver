@@ -45,14 +45,22 @@ body header a:visited:last-child {
 @media print {
   .container {
     width: 100% !important;
-    margin: 0 !important;
+    margin: 0 1rem !important;
+  }
+}
+
+html {
+  font-size: 20px;
+}
+@media print {
+  html {
+    font-size: 16px;
   }
 }
 
 body {
   font-family: sans-serif;
   margin: 0;
-  font-size: 20px;
   line-height: 2rem;
   color: black;
   background: white;
@@ -113,6 +121,12 @@ code {
   border-radius: 4px;
   margin-bottom: 1.5rem;
 }
+@media print {
+  .tweet {
+    border: none;
+    border-bottom: 1px solid grey;
+  }
+}
 .tweet h2 {
   font-size: 1.1rem;
   font-weight: bold;
@@ -143,6 +157,11 @@ code {
   margin: 0;
   padding: 1rem;
   border-top: 1px solid grey;
+}
+@media print {
+  .tweet .meta {
+    border: none;
+  }
 }
 .tweet .meta li {
   display: inline-block;
@@ -192,6 +211,11 @@ code {
   margin: 0;
   padding: 0;
 }
+@media print {
+  .dm-thread {
+    margin-right: 2rem;
+  }
+}
 .dm-thread li {
   align-items: flex-start;
   display: flex;
@@ -228,6 +252,15 @@ code {
 }
 .dm-thread .is-author .message a {
   color: white;
+}
+@media print {
+  .dm-thread .is-author .message {
+    backround: transparent;
+    color: black;
+  }
+  .dm-thread .is-author .message a {
+    color: black;
+  }
 }
 .dm-thread .author {
   color: grey;
