@@ -1,8 +1,8 @@
 #!/bin/bash 
 
-rm -rf ./docs-tmp
-mkdir docs-tmp
+rm -rf /tmp/twitter-preserver-docs
+mkdir /tmp/twitter-preserver-docs
 node scripts/readme.js
-cp README.md ./docs-tmp 
-twitter-preserver ./test/sample.zip --output=./docs-tmp/demo --pdf
-gh-pages -d docs-tmp
+cp README.md /tmp/twitter-preserver-docs 
+twitter-preserver ./test/sample.zip --output=/tmp/twitter-preserver-docs/demo --pdf
+gh-pages -d /tmp/twitter-preserver-docs
