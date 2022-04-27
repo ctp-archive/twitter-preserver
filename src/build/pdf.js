@@ -2,6 +2,7 @@ import fs from 'fs/promises'
 import pdf from 'html-pdf'
 import fg from 'fast-glob'
 import ora from 'ora'
+import path from 'path'
 import chalk from 'chalk'
 
 export default ({ output }) =>
@@ -16,12 +17,18 @@ export default ({ output }) =>
         files.map(
           (file) =>
             new Promise((resolveChild, rejectChild) => {
+              const filePath = path.resolve(output)
+              console.log(`file://${filePath}/`)
               fs.readFile(file)
                 .then((content) => content.toString())
                 .then((html) => {
                   spinner.text = `Processing ${file}`
                   pdf
-                    .create(html, { format: 'Letter' })
+                    .create(html, {
+                      format: 'Letter',
+                      base: `file://${filePath}/`,
+                      localUrlAccess: true,
+                    })
                     .toFile(
                       `${output}/pdf/${file
                         .replace(output, '')
