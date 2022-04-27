@@ -18,11 +18,7 @@ This project converts a downloaded ZIP file from Twitter into a collection of si
 
 ## Usage
 
-`npx twitter-archiver [commands]`
-
-
-
-
+`twitter-archiver [commands]`
 
 ```help
 Usage: twitter-preserver path/to/archive.zip
@@ -59,8 +55,8 @@ Arguments:
 
 --dev
   Run a web server that live updates for easier template development.
-  
-  
+
+
 ```
 
 ## Using your own templates
