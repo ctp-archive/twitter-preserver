@@ -27,10 +27,7 @@ twitter-preserver --source=path/to/archive.zip
 Arguments:
 
 --source
-  The source Zip file that was downloaded from Twitter.
-
---expanded
-  Use if the source is actually an already-expanded Twitter zip file.
+  The source Zip file or an expanded Zip file that was downloaded from Twitter.
 
 --expandUrls
   Enabled by default. Will replace all "t.co" URLs in Tweet text with
@@ -55,8 +52,8 @@ Arguments:
 
 --dev
   Run a web server that live updates for easier template development.
-
-
+  
+  
 ```
 
 ## Using your own templates
