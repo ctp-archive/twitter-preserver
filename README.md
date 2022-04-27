@@ -29,9 +29,6 @@ Arguments:
 --source
   The source Zip file that was downloaded from Twitter.
 
---expanded
-  Use if the source is actually an already-expanded Twitter zip file.
-
 --expandUrls
   Enabled by default. Will replace all "t.co" URLs in Tweet text with
   the actual URL the link was pointing to.
@@ -55,8 +52,8 @@ Arguments:
 
 --dev
   Run a web server that live updates for easier template development.
-
-
+  
+  
 ```
 
 ## Using your own templates
