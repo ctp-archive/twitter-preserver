@@ -1,58 +1,44 @@
 import fs from 'fs/promises'
-import pdf from 'html-pdf'
+import puppeteer from 'puppeteer'
 import fg from 'fast-glob'
 import ora from 'ora'
 import path from 'path'
 import chalk from 'chalk'
 
-export default ({ output }) =>
-  new Promise((resolve, reject) => {
-    const spinner = ora({
-      spinner: 'boxBounce',
-      text: 'Generating PDF files',
-    }).start()
+export default async ({ output }) => {
+  const spinner = ora({
+    spinner: 'boxBounce',
+    text: 'Generating PDF files',
+  }).start()
 
-    fg([`${output}/**.html`, `${output}/*/**.html`]).then((files) => {
-      Promise.all(
-        files.map(
-          (file) =>
-            new Promise((resolve, reject) => {
-              const filePath = path.resolve(output)
-              fs.readFile(file)
-                .then((content) => content.toString())
-                .then((html) => {
-                  spinner.text = `Processing ${file}`
-                  pdf
-                    .create(html, {
-                      format: 'Letter',
-                      base: `file://${filePath}/`,
-                      localUrlAccess: true,
-                    })
-                    .toFile(
-                      `${output}/pdf/${file
-                        .replace(output, '')
-                        .replace('.html', '.pdf')}`,
-                      function (error) {
-                        if (error) {
-                          reject(error)
-                          return
-                        }
-                        resolve()
-                      },
-                    )
-                })
-            }),
-        ),
-      )
-        .then(() => {
-          spinner.stopAndPersist({
-            symbol: chalk.green('✔️'),
-            text: `Created ${files.length} PDF files`,
-          })
-          resolve()
-        })
-        .catch((error) => {
-          reject(error)
-        })
-    })
+  await fs.mkdir(`${output}/pdf`, { recursive: true })
+
+  const files = await fg([`${output}/**.html`, `${output}/*/**.html`])
+
+  await Promise.all(
+    files.map(async (file) => {
+      //const filePath = path.resolve(output)
+      const browser = await puppeteer.launch({
+        headless: true,
+      })
+      const page = await browser.newPage()
+      const html = await (await fs.readFile(file)).toString()
+      spinner.text = `Processing ${file}`
+      await page.setContent(html.toString(), {
+        waitUntil: 'domcontentloaded',
+      })
+      await page.waitForSelector('body')
+      await page.pdf({
+        format: 'Letter',
+        path: `${output}/pdf/${file
+          .replace(output, '')
+          .replace('.html', '.pdf')}`,
+      })
+      await browser.close()
+    }),
+  )
+  spinner.stopAndPersist({
+    symbol: chalk.green('✔️'),
+    text: `Created ${files.length} PDF files`,
   })
+}
