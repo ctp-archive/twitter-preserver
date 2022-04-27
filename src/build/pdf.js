@@ -16,9 +16,8 @@ export default ({ output }) =>
       Promise.all(
         files.map(
           (file) =>
-            new Promise((resolveChild, rejectChild) => {
+            new Promise((resolve, reject) => {
               const filePath = path.resolve(output)
-              console.log(`file://${filePath}/`)
               fs.readFile(file)
                 .then((content) => content.toString())
                 .then((html) => {
@@ -35,21 +34,25 @@ export default ({ output }) =>
                         .replace('.html', '.pdf')}`,
                       function (error) {
                         if (error) {
-                          rejectChild(error)
+                          reject(error)
                           return
                         }
-                        resolveChild()
+                        resolve()
                       },
                     )
                 })
             }),
         ),
-      ).then(() => {
-        spinner.stopAndPersist({
-          symbol: chalk.green('✔️'),
-          text: `Created ${files.length} PDF files`,
+      )
+        .then(() => {
+          spinner.stopAndPersist({
+            symbol: chalk.green('✔️'),
+            text: `Created ${files.length} PDF files`,
+          })
+          resolve()
         })
-        resolve()
-      })
+        .catch((error) => {
+          reject(error)
+        })
     })
   })
