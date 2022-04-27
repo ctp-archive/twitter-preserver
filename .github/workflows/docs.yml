@@ -15,4 +15,14 @@ jobs:
       - name: Install
         run: yarn install
       - name: Build docs & deploy
-        run: yarn docs
+        run: |
+          mkdir /tmp/twitter-preserver-docs
+          cp README.md /tmp/twitter-preserver-docs 
+          yarn link
+          yarn link twitter-preserver
+          twitter-preserver ./test/sample.zip --output=/tmp/twitter-preserver-docs/demo --pdf
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: /tmp/twitter-preserver-docs
