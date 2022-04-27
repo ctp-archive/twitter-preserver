@@ -6,7 +6,7 @@ twitter-preserver --source=path/to/archive.zip
 Arguments:
 
 --source
-  The source Zip file that was downloaded from Twitter.
+  The source Zip file or an expanded Zip file that was downloaded from Twitter.
 
 --expandUrls
   Enabled by default. Will replace all "t.co" URLs in Tweet text with
