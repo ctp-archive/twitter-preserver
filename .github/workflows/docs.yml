@@ -1,4 +1,4 @@
-name: Unit tests
+name: Documentation
 on:
   push:
     branches:
