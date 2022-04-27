@@ -5,4 +5,8 @@
     width: 900px;
     margin: 0 auto;
   }
+  @media print {
+    width: 100% !important;
+    margin: 0 1rem !important;
+  }
 }

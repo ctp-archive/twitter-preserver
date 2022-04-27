@@ -6,8 +6,11 @@ permalink: likes.html
 {%for like in likes %}
   <article class="tweet" role="article">
     <p>{{like.fullText | resolveLinks | safe }}</p>
-    <div class="meta">
+    <div class="meta no-print">
       <a href="{{ like.expandedUrl }}" class="open-twitter" target="_blank" rel="noreferrer">Open in Twitter</a>
     </div>
+    <div class="print-only">
+      <code>{{ like.expandedUrl }}</code>
+    </a>
   </article>
 {% endfor %}

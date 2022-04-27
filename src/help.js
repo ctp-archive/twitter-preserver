@@ -21,6 +21,9 @@ Arguments:
 --output=./public
   Write the results of the archive to this folder (default ./public)
 
+--pdf
+  Write output to PDF files. Will appear as a \`./pdf\` directory within the output directory
+
 --include=tweets,dms,likes
   Comma-separated list of what data to include in the export.
   Possible values are: ${includes.join(', ')}

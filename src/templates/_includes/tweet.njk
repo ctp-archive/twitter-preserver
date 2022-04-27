@@ -15,7 +15,7 @@
       <li>Likes <span>{{tweet.favorite_count}}</span></li>
       <li>Retweets <span>{{tweet.retweet_count}}</span></li>
       {% if tweet._parent_thread and showThreadLink %}
-        <li>
+        <li class="no-print">
           <span>
             <a href="thread/{{tweet._parent_thread}}.html">Thread</span></a>
         </li>
@@ -23,5 +23,13 @@
       <li class="twitter-link" >
         <a href="https://twitter.com/{{account.username}}/status/{{tweet.id_str}}" target="_blank" rel="noreferrer">Open in Twitter</a>
       </li>
+      <li class="twitter-print-link">
+        <code>https://twitter.com/{{account.username}}/status/{{tweet.id_str}}</code>
+      </li>
+      {% if tweet._parent_thread and showThreadLink %}
+        <li class="print-only">
+          Thread: <code>thread/{{tweet._parent_thread}}.pdf</code>
+        </li>
+      {% endif %}
     </ul>
   </article>

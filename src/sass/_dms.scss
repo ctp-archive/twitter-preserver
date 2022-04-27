@@ -20,6 +20,9 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
+  @media print {
+    margin-right: 2rem;
+  }
   li {
     align-items: flex-start;
     display: flex;
@@ -54,6 +57,14 @@
       margin-left: auto;
       a {
         color: $dm-author-text;
+      }
+
+      @media print {
+        backround: transparent;
+        color: $text-color;
+        a {
+          color: $text-color;
+        }
       }
     }
   }

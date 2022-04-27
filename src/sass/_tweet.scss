@@ -2,6 +2,11 @@
   border: 1px solid $border-color;
   border-radius: 4px;
   margin-bottom: 1.5rem;
+  @media print {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $border-color;
+  }
   h2 {
     font-size: 1.1rem;
     font-weight: bold;
@@ -32,16 +37,28 @@
     margin: 0;
     padding: 1rem;
     border-top: 1px solid $border-color;
+    @media print {
+      border: none;
+    }
     li {
       display: inline-block;
       margin-right: 2rem;
       span {
         font-weight: bold;
       }
+      &.twitter-print-link {
+        display: none;
+        @media print {
+          display: block;
+        }
+      }
+      &.twitter-link {
+        margin-left: auto;
+        margin-right: 0;
+        @media print {
+          display: none;
+        }
+      }
     }
-  }
-  .twitter-link {
-    margin-left: auto;
-    margin-right: 0;
   }
 }

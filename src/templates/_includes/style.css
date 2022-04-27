@@ -4,6 +4,19 @@ body header {
   padding: 0.5rem;
   font-weight: bold;
 }
+@media print {
+  body header {
+    display: none;
+  }
+}
+body header.print-only {
+  display: none;
+}
+@media print {
+  body header.print-only {
+    display: block;
+  }
+}
 body header .username {
   display: inline-block;
   margin-right: 2rem;
@@ -29,18 +42,32 @@ body header a:visited:last-child {
     margin: 0 auto;
   }
 }
+@media print {
+  .container {
+    width: 100% !important;
+    margin: 0 1rem !important;
+  }
+}
+
+html {
+  font-size: 20px;
+}
+@media print {
+  html {
+    font-size: 16px;
+  }
+}
 
 body {
   font-family: sans-serif;
   margin: 0;
-  font-size: 20px;
   line-height: 2rem;
   color: black;
   background: white;
 }
 body a,
 body a:visited {
-  color: #4141cf;
+  color: rgb(65, 65, 207);
 }
 
 a[target=_blank]::after {
@@ -70,10 +97,36 @@ h1.user-title img {
   margin-left: 1.5rem;
 }
 
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+.print-only {
+  display: none !important;
+}
+@media print {
+  .print-only {
+    display: block !important;
+  }
+}
+
+code {
+  font-size: 0.8rem;
+}
+
 .tweet {
   border: 1px solid grey;
   border-radius: 4px;
   margin-bottom: 1.5rem;
+}
+@media print {
+  .tweet {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid grey;
+  }
 }
 .tweet h2 {
   font-size: 1.1rem;
@@ -106,6 +159,11 @@ h1.user-title img {
   padding: 1rem;
   border-top: 1px solid grey;
 }
+@media print {
+  .tweet .meta {
+    border: none;
+  }
+}
 .tweet .meta li {
   display: inline-block;
   margin-right: 2rem;
@@ -113,9 +171,22 @@ h1.user-title img {
 .tweet .meta li span {
   font-weight: bold;
 }
-.tweet .twitter-link {
+.tweet .meta li.twitter-print-link {
+  display: none;
+}
+@media print {
+  .tweet .meta li.twitter-print-link {
+    display: block;
+  }
+}
+.tweet .meta li.twitter-link {
   margin-left: auto;
   margin-right: 0;
+}
+@media print {
+  .tweet .meta li.twitter-link {
+    display: none;
+  }
 }
 
 .dm-list {
@@ -140,6 +211,11 @@ h1.user-title img {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+@media print {
+  .dm-thread {
+    margin-right: 2rem;
+  }
 }
 .dm-thread li {
   align-items: flex-start;
@@ -177,6 +253,15 @@ h1.user-title img {
 }
 .dm-thread .is-author .message a {
   color: white;
+}
+@media print {
+  .dm-thread .is-author .message {
+    backround: transparent;
+    color: black;
+  }
+  .dm-thread .is-author .message a {
+    color: black;
+  }
 }
 .dm-thread .author {
   color: grey;
