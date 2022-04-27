@@ -1,193 +1,10 @@
 <!doctype html>
 <html>
   <head>
-    <title>Thread</title>
+    <title></title>
+    
     <style>
-      body header {
-  border-bottom: 1px solid grey;
-  margin-bottom: 2rem;
-  padding: 0.5rem;
-  font-weight: bold;
-}
-body header .username {
-  display: inline-block;
-  margin-right: 2rem;
-}
-body header a,
-body header a:visited {
-  color: black;
-  display: inline-block;
-  margin-right: 1.5rem;
-}
-body header a:last-child,
-body header a:visited:last-child {
-  margin-right: 0;
-}
-
-.container {
-  width: 100%;
-  margin: 0 2rem;
-}
-@media screen and (min-width: 1100px) {
-  .container {
-    width: 900px;
-    margin: 0 auto;
-  }
-}
-
-body {
-  font-family: sans-serif;
-  margin: 0;
-  font-size: 20px;
-  line-height: 2rem;
-  color: black;
-  background: white;
-}
-body a,
-body a:visited {
-  color: #4141cf;
-}
-
-a[target=_blank]::after {
-  content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);
-  margin-left: 0.5rem;
-  display: inline-block;
-}
-
-h1.user-title {
-  display: flex;
-  align-items: center;
-}
-h1.user-title img {
-  max-width: 60px;
-  display: inline-block;
-  margin-right: 0.5rem;
-}
-
-.verified {
-  color: white;
-  background: #1b95e0;
-  display: inline-block;
-  border-radius: 3px;
-  font-size: 1rem;
-  padding: 0 0.5rem;
-  font-weight: bold;
-  margin-left: 1.5rem;
-}
-
-.tweet {
-  border: 1px solid grey;
-  border-radius: 4px;
-  margin-bottom: 1.5rem;
-}
-.tweet h2 {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin: 1rem 0 0 1rem;
-}
-.tweet h2 a {
-  color: black;
-}
-.tweet h2 span {
-  color: grey;
-  font-size: 0.8rem;
-  font-weight: normal;
-}
-.tweet p {
-  padding: 1rem;
-  margin: 0;
-}
-.tweet .media {
-  margin: 1rem;
-}
-.tweet .media img {
-  max-width: 100%;
-}
-.tweet .meta {
-  list-style-type: none;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0;
-  padding: 1rem;
-  border-top: 1px solid grey;
-}
-.tweet .meta li {
-  display: inline-block;
-  margin-right: 2rem;
-}
-.tweet .meta li span {
-  font-weight: bold;
-}
-.tweet .twitter-link {
-  margin-left: auto;
-  margin-right: 0;
-}
-
-.dm-list {
-  border: 1px solid grey;
-  border-radius: 4px;
-  margin-bottom: 1.5rem;
-}
-.dm-list h2 {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin: 1rem 0 0 1rem;
-}
-.dm-list h2 a {
-  color: black;
-}
-.dm-list p {
-  padding: 1rem;
-  margin: 0;
-}
-
-.dm-thread {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-.dm-thread li {
-  align-items: flex-start;
-  display: flex;
-  flex-wrap: wrap;
-}
-.dm-thread .message {
-  border: 1px solid grey;
-  border-radius: 20px 20px 20px 0;
-  padding: 1rem;
-  display: inline-block;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-.dm-thread .message .media {
-  margin: 1rem 0;
-}
-.dm-thread .message .media img,
-.dm-thread .message .media video {
-  width: 100%;
-}
-.dm-thread .is-author {
-  align-items: flex-end;
-}
-.dm-thread .is-author p,
-.dm-thread .is-author .author {
-  text-align: right;
-  margin-left: auto;
-}
-.dm-thread .is-author p {
-  border-radius: 20px 20px 0 20px;
-  color: white;
-  background: #3e547e;
-}
-.dm-thread .is-author p a {
-  color: white;
-}
-.dm-thread .author {
-  color: grey;
-  font-size: 0.9rem;
-  width: 100%;
-}
-
+      body header{border-bottom:1px solid grey;margin-bottom:2rem;padding:.5rem;font-weight:700}@media print{body header{display:none}}body header.print-only{display:none}@media print{body header.print-only{display:block}}body header .username{display:inline-block;margin-right:2rem}body header a,body header a:visited{color:#000;display:inline-block;margin-right:1.5rem}body header a:last-child,body header a:visited:last-child{margin-right:0}.container{width:100%;margin:0 2rem}@media screen and (min-width:1100px){.container{width:900px;margin:0 auto}}@media print{.container{width:100%!important;margin:0 1rem!important}}html{font-size:20px}@media print{html{font-size:16px}}body{font-family:sans-serif;margin:0;line-height:2rem;color:#000;background:#fff}body a,body a:visited{color:#4141cf}a[target=_blank]::after{content:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVR42qXKwQkAIAxDUUdxtO6/RBQkQZvSi8I/pL4BoGw/XPkh4XigPmsUgh0626AjRsgxHTkUThsG2T/sIlzdTsp52kSS1wAAAABJRU5ErkJggg==);margin-left:.5rem;display:inline-block}h1.user-title{display:flex;align-items:center}h1.user-title img{max-width:60px;display:inline-block;margin-right:.5rem}.verified{color:#fff;background:#1b95e0;display:inline-block;border-radius:3px;font-size:1rem;padding:0 .5rem;font-weight:700;margin-left:1.5rem}@media print{.no-print{display:none!important}}.print-only{display:none!important}@media print{.print-only{display:block!important}}code{font-size:.8rem}.tweet{border:1px solid grey;border-radius:4px;margin-bottom:1.5rem}@media print{.tweet{border:none;border-radius:0;border-bottom:1px solid grey}}.tweet h2{font-size:1.1rem;font-weight:700;margin:1rem 0 0 1rem}.tweet h2 a{color:#000}.tweet h2 span{color:grey;font-size:.8rem;font-weight:400}.tweet p{padding:1rem;margin:0}.tweet .media{margin:1rem}.tweet .media img{max-width:100%}.tweet .meta{list-style-type:none;display:flex;flex-wrap:wrap;margin:0;padding:1rem;border-top:1px solid grey}@media print{.tweet .meta{border:none}}.tweet .meta li{display:inline-block;margin-right:2rem}.tweet .meta li span{font-weight:700}.tweet .meta li.twitter-print-link{display:none}@media print{.tweet .meta li.twitter-print-link{display:block}}.tweet .meta li.twitter-link{margin-left:auto;margin-right:0}@media print{.tweet .meta li.twitter-link{display:none}}.dm-list{border:1px solid grey;border-radius:4px;margin-bottom:1.5rem}.dm-list h2{font-size:1.1rem;font-weight:700;margin:1rem 0 0 1rem}.dm-list h2 a{color:#000}.dm-list p{padding:1rem;margin:0}.dm-thread{list-style-type:none;margin:0;padding:0}@media print{.dm-thread{margin-right:2rem}}.dm-thread li{align-items:flex-start;display:flex;flex-wrap:wrap}.dm-thread .message{border:1px solid grey;border-radius:20px 20px 20px 0;padding:1rem;display:inline-block;margin-top:1rem;margin-bottom:.5rem}.dm-thread .message .media{margin:1rem 0}.dm-thread .message .media img,.dm-thread .message .media video{width:100%}.dm-thread .is-author{align-items:flex-end}.dm-thread .is-author .author,.dm-thread .is-author p{text-align:right;margin-left:auto}.dm-thread .is-author .message{border-radius:20px 20px 0 20px;color:#fff;background:#3e547e;margin-left:auto}.dm-thread .is-author .message a{color:#fff}@media print{.dm-thread .is-author .message{backround:transparent;color:#000}.dm-thread .is-author .message a{color:#000}}.dm-thread .author{color:grey;font-size:.9rem;width:100%}
     </style>
   </head>
   <body>
@@ -206,11 +23,13 @@ h1.user-title img {
         <a href="../download.html">Download</a>
       </div>
     </header>
+    <header class="print-only">
+      preservationi19
+    </header>
     <main class="container">
-      
-  <h1>preservationi19 Tweet thread</h1>
-  
-    <article class="tweet" role="article">
+      <h1>preservationi19 Tweet thread</h1>
+
+  <article class="tweet" role="article">
   <h2>
     <a href="#1497321400138231810" id="1497321400138231810">February 25, 2022, 1:23 PM PST</a>
     <span>from <a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a></span>
@@ -224,10 +43,14 @@ h1.user-title img {
       <li class="twitter-link" >
         <a href="https://twitter.com/preservationi19/status/1497321400138231810" target="_blank" rel="noreferrer">Open in Twitter</a>
       </li>
+      <li class="twitter-print-link">
+        <code>https://twitter.com/preservationi19/status/1497321400138231810</code>
+      </li>
+      
     </ul>
   </article>
-  
-    <article class="tweet" role="article">
+
+  <article class="tweet" role="article">
   <h2>
     <a href="#1497321438809710593" id="1497321438809710593">February 25, 2022, 1:23 PM PST</a>
     <span>from <a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a></span>
@@ -241,10 +64,14 @@ h1.user-title img {
       <li class="twitter-link" >
         <a href="https://twitter.com/preservationi19/status/1497321438809710593" target="_blank" rel="noreferrer">Open in Twitter</a>
       </li>
+      <li class="twitter-print-link">
+        <code>https://twitter.com/preservationi19/status/1497321438809710593</code>
+      </li>
+      
     </ul>
   </article>
-  
-    <article class="tweet" role="article">
+
+  <article class="tweet" role="article">
   <h2>
     <a href="#1497321488197718016" id="1497321488197718016">February 25, 2022, 1:23 PM PST</a>
     <span>from <a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a></span>
@@ -258,10 +85,14 @@ h1.user-title img {
       <li class="twitter-link" >
         <a href="https://twitter.com/preservationi19/status/1497321488197718016" target="_blank" rel="noreferrer">Open in Twitter</a>
       </li>
+      <li class="twitter-print-link">
+        <code>https://twitter.com/preservationi19/status/1497321488197718016</code>
+      </li>
+      
     </ul>
   </article>
-  
-    <article class="tweet" role="article">
+
+  <article class="tweet" role="article">
   <h2>
     <a href="#1497321527846395907" id="1497321527846395907">February 25, 2022, 1:24 PM PST</a>
     <span>from <a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a></span>
@@ -275,9 +106,12 @@ h1.user-title img {
       <li class="twitter-link" >
         <a href="https://twitter.com/preservationi19/status/1497321527846395907" target="_blank" rel="noreferrer">Open in Twitter</a>
       </li>
+      <li class="twitter-print-link">
+        <code>https://twitter.com/preservationi19/status/1497321527846395907</code>
+      </li>
+      
     </ul>
   </article>
-  
 
     </main>
   </body>

@@ -24,7 +24,6 @@ This project converts a downloaded ZIP file from Twitter into a collection of si
 
 
 
-
 ```help
 Usage: twitter-preserver path/to/archive.zip
 twitter-preserver --source=path/to/archive.zip
@@ -46,6 +45,9 @@ Arguments:
 
 --output=./public
   Write the results of the archive to this folder (default ./public)
+
+--pdf
+  Write output to PDF files. Will appear as a `./pdf` directory within the output directory
 
 --include=tweets,dms,likes
   Comma-separated list of what data to include in the export.
