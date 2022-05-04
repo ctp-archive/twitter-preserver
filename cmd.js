@@ -65,7 +65,7 @@ const includedData = include.split(',').map((item) => item.trim().toLowerCase())
       }),
     )
     .then((path) => {
-      if (!path !== source) {
+      if (source.search('.zip') > -1) {
         return cleanup(path)
       }
       return

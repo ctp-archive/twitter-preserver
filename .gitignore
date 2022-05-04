@@ -5,3 +5,7 @@ public
 .cache
 docs-tmp
 scripts
+.coveralls.yaml
+test/sample/
+coverage
+.nyc_output

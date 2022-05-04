@@ -11,5 +11,13 @@ jobs:
           node-version: '17.4'
       - name: Install
         run: yarn install
+      - name: Test setup
+        run: yarn setup:test
       - name: Testing
         run: yarn test
+      - name: Coverage
+        run: yarn coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

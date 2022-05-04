@@ -232,6 +232,7 @@ export default ({
                     result = result.replace(matchSearch, '')
                   } else {
                     if (
+                      target.expanded_url &&
                       target.expanded_url.search(
                         `twitter.com/${account.username}/status/`,
                       ) > -1
